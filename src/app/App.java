@@ -5,5 +5,6 @@ public class App {
         System.out.println("Hello Java");
         System.err.println("CHE ROTTURA");
         System.out.println("BELLA");
+        System.out.println("Mela");
     }
 }
