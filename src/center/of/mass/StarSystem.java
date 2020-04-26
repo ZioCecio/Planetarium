@@ -130,7 +130,7 @@ public class StarSystem {
 		}
 		return totalMass;
 	}
-	//fix
+	
 	public void lookFor(Star s) {
 		Position pos = new Position();
 		pos = PlanetariumUtils.readPosition();

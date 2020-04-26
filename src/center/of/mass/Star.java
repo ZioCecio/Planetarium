@@ -91,4 +91,9 @@ public class Star extends CelestialBody {
 			System.out.println(NO_SPACE);
 		}
 	}
+	
+	public Star(ArrayList<Planet> planet) {
+		super();
+		this.planets=planet;
+	}
 }
