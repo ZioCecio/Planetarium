@@ -3,35 +3,26 @@ package center.of.mass;
 import java.time.LocalDateTime;
 
 public class IdGenerator {
-	/*per generare id utilizzo le informazioni
-	 * più significative 
-	 * -tipologia di corpo celeste
-	 * -posizione (univoca)
-	 * -data e orario di scoperta della stella
-	 * l'ultima essendo univoca esula il caso limite in cui 
-	 * due stelle rispettativamente una rimossa e una creata 
-	 * si trovino nella stessa posizione
-	 * questo permette di tenere in archivio scoperte passate 
-	 * evitando doppioni indinstinguibili
-	 * 
-	 * 
+	/**<b>to generate ID</b> I use the most significant information
+* <p>
+* <dl>-celestial body type</dl>
+*<dl>-position (univocal)</dl>
+*<dl>-date and time of discovery of the star.</dl></p>
+Being the latter unambiguous, it goes beyond the limit case in which two stars respectively a removed and a created are in the same position. 
+This allows you to keep past discoveries in the archive avoiding indistinguishable duplications
+	 * @author Alessandra, edited by Simone
 	*/
-	public static String create(CelestialBody c) {
-		Star s = new Star();
-		Planet p = new Planet();
-		Moon m = new Moon();
+	public static String create(CelestialBody c) {	
 		String id = null;
-		if (c.getClass().isInstance(p)) {
+		if (c instanceof Planet) {
 			id = "P";
-		} else if (c.getClass().isInstance(m)) {
+		} else if (c instanceof Moon) {
 			id = "M";
-		} else if (c.getClass().isInstance(s)) {
+		} else if (c instanceof Star) {
 			id = "S";
 		}
-
 		String position = c.getPosition().toString();
 		LocalDateTime time = LocalDateTime.now();
 		return id + position + "\t" + time;
-
 	}
 }

@@ -8,13 +8,7 @@ public class MainProgram {
 
 	public static void main(String[] args) {
 		StarSystem ss=new StarSystem();
-		Position pos=new Position();
-		pos.setX(0);
-		pos.setY(0);
-		Star s = new Star();
-		s.setPosition(pos);
-		s.setId();
-		s.setMass(30); //maximum mass
+		Star s = new Star(30,StarSystem.CENTER);
 		ArrayList<Planet> p = new ArrayList<Planet>();
 		s.setPlanets(p);
 		ss.displayMenu(s);

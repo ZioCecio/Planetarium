@@ -3,14 +3,18 @@ package center.of.mass;
 import java.util.ArrayList;
 
 import center.of.mass.Planet;
-import it.unibs.fp.mylib.MyMath;
+import it.unibs.fp.mylib.*;
 
 public class Star extends CelestialBody {
+	
 	private static final String NO_SPACE = "No space left";
 	private static final String FOUND = "Planet has been found";
 	private static final int LIM_PLANETS = 26000;
 	private  ArrayList<Planet> planets;
-
+	
+	public Star(double mass, Position position) {
+		super(mass, position);
+	}
 
 	public ArrayList<Planet> getPlanets() {
 		return planets;
@@ -22,8 +26,6 @@ public class Star extends CelestialBody {
 	/*
 	 * action on the planets are managed by the star
 	 * w/o using getters and setters
-	 * 
-	 * 
 	 */
 	public void actionPlanet(int label) {
 		Planet p1 = new Planet();
@@ -43,7 +45,7 @@ public class Star extends CelestialBody {
 			}
 			break;
 		default:
-			System.out.println("Error");
+			System.err.println("Error");
 		}
 	}
 /*
@@ -92,8 +94,8 @@ public class Star extends CelestialBody {
 		}
 	}
 	
-	public Star(ArrayList<Planet> planet) {
-		super();
-		this.planets=planet;
-	}
+//	public Star(ArrayList<Planet> planet) {
+//		super();
+//		this.planets=planet;
+//	}
 }

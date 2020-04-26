@@ -2,7 +2,7 @@ package center.of.mass;
 
 import java.util.ArrayList;
 
-import it.unibs.fp.mylib.MyMath;
+import it.unibs.fp.mylib.*;
 
 public class Planet extends CelestialBody{
 	private static final String NO_SPACE = "No space left";
