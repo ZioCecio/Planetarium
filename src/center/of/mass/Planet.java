@@ -4,31 +4,48 @@ import java.util.ArrayList;
 
 import it.unibs.fp.mylib.*;
 
-public class Planet extends CelestialBody{
+public class Planet extends CelestialBody {
 	private static final String NO_SPACE = "No space left";
 	private static final String NO_MOONS = "This planet has no moons";
 	private static final String FOUND_MOON = "Moon has been found";
 	private static final int LIM_MOONS = 5000;
 	private ArrayList<Moon> moons;
 	private double radius;
-	
-	public ArrayList<Moon> getMoons() {
-		return moons;
+
+	public Planet(double mass, Position position) {
+		super(mass, position);
+		setRadius();
+	}
+
+	public Planet() {
+
 	}
 
 	public void setMoons(ArrayList<Moon> moons) {
 		this.moons = moons;
 	}
+
+	/**
+	 * @author Alessandra
+	 */
 	public double getRadius() {
 		return radius;
 	}
 
-	public void setRadius(double radius) {
-		this.radius = radius;
+	/**
+	 * @author Simone
+	 */
+	private void setRadius() {
+		this.radius = RadiusGenerator.create(this);
 	}
+
+	public ArrayList<Moon> getMoons() {
+		return moons;
+	}
+
 	public Moon lookForMoon(Position pos) {
-		boolean foundMoonX=false;
-		boolean foundMoonY=false;
+		boolean foundMoonX = false;
+		boolean foundMoonY = false;
 		try {
 			for (int i = 0; i < moons.size(); i++) {
 				Moon m = new Moon();
@@ -39,28 +56,30 @@ public class Planet extends CelestialBody{
 					System.out.println(FOUND_MOON);
 					return m;
 				}
-			} 
-		}catch (Exception NullPointerException) {
+			}
+		} catch (Exception NullPointerException) {
 			return null;
 		}
 		return null;
 	}
-	public void displayMoons(){
-		
+
+	public void displayMoons() {
+
 		try {
 			for (int i = 0; i < moons.size(); i++) {
 				Moon m = new Moon();
 				m = moons.get(i);
 				System.out.println(m.getId());
-			} 
+			}
 		} catch (Exception NullPointerException) {
 			System.out.println(NO_MOONS);
 		}
 	}
+
 	public void actionMoon(int label) {
-		switch(label) {
+		switch (label) {
 		case 1:
-			Moon m1=PlanetariumUtils.readMoon();
+			Moon m1 = PlanetariumUtils.readMoon();
 			checkPlace(m1);
 			break;
 		case 2:
@@ -70,56 +89,57 @@ public class Planet extends CelestialBody{
 			System.out.println("Error");
 			break;
 		}
-		} 
-		
+	}
+
 	public double partialXMoon() {
-		double partialXMoon=0;
-		double mass=0;
+		double partialXMoon = 0;
+		double mass = 0;
 		try {
 			for (int i = 0; i < moons.size(); i++) {
 				mass = moons.get(i).getMass();
 				partialXMoon += mass * (moons.get(i).getPosition().getX());
-			} 
+			}
 		} catch (Exception NullPointerException) {
-			partialXMoon=0;
+			partialXMoon = 0;
 		}
 		return partialXMoon;
 	}
+
 	public double partialYMoon() {
-		double partialYMoon=0;
-		double mass=0;
+		double partialYMoon = 0;
+		double mass = 0;
 		try {
 			for (int i = 0; i < moons.size(); i++) {
 				mass = moons.get(i).getMass();
 				partialYMoon += mass * (moons.get(i).getPosition().getY());
-			} 
+			}
 		} catch (Exception NullPointerException) {
-			partialYMoon=0;
+			partialYMoon = 0;
 		}
 		return partialYMoon;
 	}
+
 	public double totalMassMoon() {
 
-		double totalMass=0;
-	try {
-				for (int i = 0; i < moons.size(); i++) {
-			totalMass+=moons.get(i).getMass();
-		}
+		double totalMass = 0;
+		try {
+			for (int i = 0; i < moons.size(); i++) {
+				totalMass += moons.get(i).getMass();
+			}
 
 		} catch (Exception NullPointerException) {
-			totalMass=0;
-		}		return totalMass;
+			totalMass = 0;
+		}
+		return totalMass;
 	}
 
 	public void checkPlace(Moon m) {
-		if(moons.size()<LIM_MOONS) {
+		if (moons.size() < LIM_MOONS) {
 			moons.add(m);
-		}
-		else {
+		} else {
 			System.out.println(NO_SPACE);
 		}
-		
-	}
 
+	}
 
 }

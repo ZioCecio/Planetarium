@@ -12,8 +12,8 @@ public class Star extends CelestialBody {
 	private static final int LIM_PLANETS = 26000;
 	private  ArrayList<Planet> planets;
 	
-	public Star(double mass, Position position) {
-		super(mass, position);
+	public Star(double mass) {
+		super(mass, StarSystem.CENTER);
 	}
 
 	public ArrayList<Planet> getPlanets() {
@@ -62,8 +62,8 @@ public class Star extends CelestialBody {
 	public CelestialBody lookForPlanet(Position pos) {
 		boolean planetContainX = false;
 		boolean planetContainY = false;
+		Planet p1=new Planet();
 		for (int i = 0; i < planets.size(); i++) {
-			Planet p1=new Planet();
 			p1=planets.get(i);
 			planetContainX = MyMath.compareDouble(p1.getPosition().getX(), pos.getX());
 			planetContainY = MyMath.compareDouble(p1.getPosition().getY(), pos.getY());
@@ -85,7 +85,7 @@ public class Star extends CelestialBody {
 		return null;
 		
 	}
-	public void checkPlace(Planet p) {
+	private void checkPlace(Planet p) {
 		if(planets.size()<LIM_PLANETS) {
 			planets.add(p);
 		}

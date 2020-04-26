@@ -13,6 +13,7 @@ public class StarSystem {
 			"Calculate center of mass" };
 	private static final String[] ITEMS_2 = { "to enter a planet", "to enter a moon" };
 	private static final String NOTHING_FOUND = "Nothing has been found";
+	/**The {@linkplain StarSystem} CENTER {@value }*/
 	public static final Position CENTER = new Position(0, 0);
 
 	/**

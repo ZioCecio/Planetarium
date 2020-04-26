@@ -3,31 +3,37 @@ package center.of.mass;
 import java.io.Console;
 
 import it.unibs.fp.mylib.*;
-/**Util static Class for input data*/
+
+/** Util static Class for input data */
 public class PlanetariumUtils {
 	private static final String MOON_ALREADY_EXIST = "A moon in this position has already been created,please look for another planet";
-	private static final String MOON_LINKED_PLANET = "A moon must be linked to his own planet please enter planet positiono>";
+	private static final String MOON_LINKED_PLANET = "A moon must be linked to his own planet please enter planet position>";
 	private static final String MESSAGE_MASS = "Enter a valid mass>";
 	private static final String MESSAGE_X_AXIS = "Enter the position on the x-axis>";
 	private static final String MESSAGE_Y_AXIS = "Enter the position on the y-axis>";
 	private static final double MINIMUM = 0.0000000001;
 
+	/**
+	 * Instantiates a {@linkplain Planet} {@linkplain Object} starting from the
+	 * <b>mass</b> and <b>position</b> obtained in {@linkplain Console}
+	 * 
+	 * @see {@linkplain #readPosition()}, {@linkplain #readNewMass()}
+	 * @author Alessandra, remake by Simone
+	 */
 	public static Planet readPlanet() {
-		Planet p = new Planet();
-		readNewMass(p);
-		p.setPosition(readPosition());
-		//p.setId();
-		// p.setRadius();
-		return p;
+		return new Planet(readNewMass(), readPosition());
 	}
 
+	/**
+	 * Instantiates a {@linkplain Moon} {@linkplain Object} starting from the
+	 * <b>mass</b> and <b>position</b> obtained in {@linkplain Console}
+	 * 
+	 * @see {@linkplain #readPosition()}, {@linkplain #readNewMass()}
+	 * @author Alessandra, remake by Simone
+	 */
+
 	public static Moon readMoon() {
-		Moon m = new Moon();
-		readNewMass(m);
-		m.setPosition(readPosition());
-		//m.setId();
-		// p.setRadius();
-		return m;
+		return new Moon(readNewMass(), readPosition());
 	}
 
 	public static Planet readPlanetLinkedTo(Star s) {
@@ -40,7 +46,7 @@ public class PlanetariumUtils {
 			if (c instanceof Planet) {
 				return new Planet();
 
-			} else if (c.getClass().isInstance(Moon.class)) {
+			} else if (c instanceof Moon) {
 				System.out.println(MOON_ALREADY_EXIST);
 			}
 
@@ -71,18 +77,20 @@ public class PlanetariumUtils {
 		// check position already used
 		return pos;
 	}
+
 	/**
 	 * static method that requires in {@linkplain Console}, the values of the
 	 * <b>mass</b> about a {@linkplain CelestialBody}
 	 * 
-	 * @author Alessandra
+	 * @author Alessandra, edited by Simone
 	 */
-	public static void readNewMass(CelestialBody c) {
+	public static double readNewMass() {
 		double mass = 0;
 		do {
 			mass = InputDati.leggiDoubleConMinimo(MESSAGE_MASS, MINIMUM);
 		} while (mass < MINIMUM);
-		c.setMass(mass);
+		return mass;
+		// c.setMass(mass);
 	}
 
 }
