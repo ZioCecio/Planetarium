@@ -1,7 +1,7 @@
 package app;
 
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args)  {
         System.out.println("HEllo");
         System.err.println("CHE ROTTURA");
         System.out.println("BELLA");

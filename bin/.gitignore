@@ -1,1 +1,11 @@
 /app/
+/src/
+/center/
+/CelestialBody.class
+/MainProgram.class
+/Moon.class
+/Planet.class
+/PlanetariumUtils.class
+/Position.class
+/Star.class
+/StarSystem.class
