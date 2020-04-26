@@ -1,8 +1,10 @@
 package center.of.mass;
 
 import it.unibs.fp.mylib.InputDati;
+import it.unibs.fp.mylib.MyMath;
 
 public class PlanetariumUtils {
+	private static final int POSITION_STAR = 0;
 	private static final String MOON_ALREADY_EXIST = "A moon in this position has already been created,please look for another planet";
 	private static final String MOON_LINKED_PLANET = "A moon must be linked to his own planet please enter planet positiono>";
 	private static final String MESSAGE_MASS = "Enter a valid mass>";
@@ -55,12 +57,12 @@ public class PlanetariumUtils {
 		double x = 0;
 		double y = 0;
 		do {
-			x = InputDati.leggiDoubleConMinimo(MESSAGE_X_AXIS, MINIMUM);
-		} while (x < MINIMUM);
+			x = InputDati.leggiDouble(MESSAGE_X_AXIS);
+		} while (MyMath.compareDouble(x,POSITION_STAR));
 		pos.setX(x);
 		do {
-			y = InputDati.leggiDoubleConMinimo(MESSAGE_Y_AXIS, MINIMUM);
-		} while (y < MINIMUM);
+			y = InputDati.leggiDouble(MESSAGE_Y_AXIS);
+		} while (MyMath.compareDouble(y,POSITION_STAR));
 		pos.setY(y);
 		// checkValue(pos);
 		// check position already used
