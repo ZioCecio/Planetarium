@@ -1,5 +1,5 @@
 -rivedere il caso in cui la posizione sia uguale-> dare errore
--controlla posizione sole->fatto
+-controlla posizione sole-> fatto
 -cerca luna e riporta anche il pianeta
 -data luna visualizzazione percorso stella-pianeta-luna
 casi limite 
