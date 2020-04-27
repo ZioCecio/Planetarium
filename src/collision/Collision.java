@@ -1,7 +1,25 @@
 package collision;
 
+import center.of.mass.CelestialBody;
+import center.of.mass.Moon;
+import center.of.mass.Planet;
+import center.of.mass.Star;
+
 public class Collision {
-	/*DEVO ASPETTARE I VARI METODI DI Planet, Sun...*/
+//	public static void Collision(CelestialBody c1, CelestialBody c2) {
+//		if(c1 instanceof Star)
+//			if(c2 instanceof Moon)
+//			{
+//				Con
+//			}
+//		
+//		
+//	}
+//	
+//	private static void StarPlanetCollision(Star s, Planet p) {
+//		Collision(s, p);
+//	}
+	
 }
 /*Praticamente, avendo il raggio_di_rivoluzione, ordino i pianeti tramite quello(si cerca un algoritmo che fa questo lavoro)
  * dopodiche controllo tutte le lune di un primo pianeta(P1) e le ordino e faccio lo stesso con quelle di un secondo pianeta(p2).
