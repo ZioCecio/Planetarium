@@ -6,6 +6,13 @@ public class Moon extends CelestialBody {
 	private double radius;
 	private Planet planet;
 
+	/**
+	 * Constructor of the {@code Moon}
+	 * @author Gabriele
+	 * @param name
+	 * @param mass
+	 * @param position
+	 */
 	public Moon(String name, double mass, Position position) {
 		super(name, mass, position);
 		this.planet = null;
@@ -24,6 +31,7 @@ public class Moon extends CelestialBody {
 	}
 
 	/**
+	 * @author Gabriele
 	 * @return the radius
 	 */
 	public double getRadius() {
@@ -31,6 +39,7 @@ public class Moon extends CelestialBody {
 	}
 
 	/**
+	 * @author Gabriele
 	 * @return the {@linkplain Planet} which {@code this} {@linkplain Moon} orbits
 	 */
 	public Planet getPlanet() {
@@ -38,7 +47,8 @@ public class Moon extends CelestialBody {
 	}
 
 	/**
-	 *@param the {@linkplain Planet} which {@code this} {@linkplain Moon} orbits
+	 * @author Gabriele
+	 * @param the {@linkplain Planet} which {@code this} {@linkplain Moon} orbits
 	 */
 	public void setPlanet(Planet planet) {
 		this.planet = planet;

@@ -1,8 +1,11 @@
 package center.of.mass;
 
+import java.util.ArrayList;
+
 public class MainProgram {
 
 	public static void main(String[] args) {
+		/*
 		Star sole = new Star("Sole", 30, new Position(0, 0));
 
 		Planet pianeta1 = new Planet("Terra", 5, new Position(0, -3));
@@ -18,6 +21,14 @@ public class MainProgram {
 		starSystem.addPlanet(pianeta2);
 
 		System.out.println(pianeta2.getStar().getName());
+
+		Planet p = PlanetariumUtils.readPlanet();
+		System.out.println(p);
+		*/
+
+		Manager manager = new Manager("Welcome in the Planetarium app!");
+
+		manager.startProgram();
 	}
 
 }

@@ -9,6 +9,13 @@ public class Planet extends CelestialBody {
 	private double radius;
 	private Star star;
 
+	/**
+	 * Constructor of the {@code Planet}
+	 * @author Gabriele
+	 * @param name
+	 * @param mass
+	 * @param position
+	 */
 	public Planet(String name, double mass, Position position) {
 		super(name, mass, position);
 		this.star = null;
@@ -60,6 +67,7 @@ public class Planet extends CelestialBody {
 
 	/**
 	 * Add a new {@code Moon} that orbits around {@code this} planet
+	 * @author Gabriele
 	 * @param moon
 	 */
 	public void addMoon(Moon moon) {
@@ -74,6 +82,7 @@ public class Planet extends CelestialBody {
 
 	/**
 	 * Add new several {@code Moon} that orbit around {@code this} planet
+	 * @author Gabriele
 	 * @param moons
 	 */
 	public void addMoons(ArrayList<Moon> moons) {
@@ -81,7 +90,7 @@ public class Planet extends CelestialBody {
 			return;
 		}
 
-		for(Moon moon : this.moons) {
+		for(Moon moon : moons) {
 			moon.setPlanet(this);
 		}
 
@@ -90,6 +99,7 @@ public class Planet extends CelestialBody {
 
 	/**
 	 * Get the {@code Moon} specified by the id
+	 * @author Gabriele
 	 * @param id
 	 * @return the {@code Moon} specified
 	 */
@@ -106,6 +116,7 @@ public class Planet extends CelestialBody {
 	/**
 	 * Get the {@code Moon} specified by the name
 	 * If there are several moons with the same name, only the first will be retuned
+	 * @author Gabriele
 	 * @param name
 	 * @return the {@code Moon} specified
 	 */
@@ -121,6 +132,7 @@ public class Planet extends CelestialBody {
 
 	/**
 	 * Get the {@code Moon} specified by the position
+	 * @author Gabriele
 	 * @param position
 	 * @return the {@code Moon} specified
 	 */
@@ -136,6 +148,7 @@ public class Planet extends CelestialBody {
 
 	/**
 	 * Remove the {@code Moon} specified by the id
+	 * @author Gabriele
 	 * @param id
 	 */
 	public void removeMoonById(String id) {
@@ -147,6 +160,7 @@ public class Planet extends CelestialBody {
 	/**
 	 * Remove the {@code Moon} specified by the name
 	 * If there are several moons with the same name, only the first will be removed
+	 * @author Gabriele
 	 * @param name
 	 */
 	public void removeMoonByName(String name) {
@@ -157,6 +171,7 @@ public class Planet extends CelestialBody {
 
 	/**
 	 * Remove the {@code Moon} specified by the position
+	 * @author Gabriele
 	 * @param position
 	 */
 	public void removeMoonByPosition(Position position) {
@@ -167,6 +182,7 @@ public class Planet extends CelestialBody {
 
 	/**
 	 * Calculate the radius of the orbit
+	 * @author Gabriele
 	 * @param star
 	 * @return the radius of the orbit
 	 */
@@ -175,6 +191,7 @@ public class Planet extends CelestialBody {
 	}
 
 	/**
+	 * @author Gabriele
 	 * @return the moons
 	 */
 	public ArrayList<Moon> getMoons() {
@@ -182,6 +199,7 @@ public class Planet extends CelestialBody {
 	}
 
 	/**
+	 * @author Gabriele
 	 * @return the star
 	 */
 	public Star getStar() {
@@ -189,6 +207,7 @@ public class Planet extends CelestialBody {
 	}
 
 	/**
+	 * @author Gabriele
 	 * @return the radius
 	 */
 	public double getRadius() {
@@ -196,11 +215,17 @@ public class Planet extends CelestialBody {
 	}
 
 	/**
+	 * @author Gabriele
 	 * @param star the star to set
 	 */
 	public void setStar(Star star) {
 		this.star = star;
 
 		this.radius = this.calcRadius(star);
+	}
+
+	@Override
+	public String toString() {
+		return "Planet " + this.getName() + " with mass " + this.getMass() + " in position " + this.getPosition();
 	}
 }

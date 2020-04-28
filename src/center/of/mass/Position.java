@@ -76,6 +76,7 @@ public class Position {
 
 	/**
 	 * Check if two {@code Position} are the same
+	 * @author Gabriele
 	 * @param position
 	 * @return {@code true} if {@code this} position is equals as that passed as parameter
 	 */

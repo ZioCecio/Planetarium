@@ -1,14 +1,19 @@
 package center.of.mass;
 
-
 public class CelestialBody {
 	private String id;
 	private String name;
 	private double mass;
 	private Position position;
 	
-	public CelestialBody(String name, double mass, Position position) {
-		
+	/**
+	 * Constructor of {@code CelestialBody}
+	 * @author Gabriele
+	 * @param name
+	 * @param mass
+	 * @param position
+	 */
+	public CelestialBody(String name, double mass, Position position) {	
 		this.name = name;
 		this.mass = mass;
 		this.position = position;
@@ -16,6 +21,7 @@ public class CelestialBody {
 	}
 
 	/**
+	 * @author Gabriele
 	 * @return the id
 	 */
 	public String getId() {
@@ -23,6 +29,7 @@ public class CelestialBody {
 	}
 
 	/**
+	 * @author Gabriele
 	 * @return the name
 	 */
 	public String getName() {
@@ -30,6 +37,7 @@ public class CelestialBody {
 	}
 
 	/**
+	 * @author Gabriele
 	 * @return the mass
 	 */
 	public double getMass() {
@@ -37,6 +45,7 @@ public class CelestialBody {
 	}
 
 	/**
+	 * @author Gabriele
 	 * @return the position
 	 */
 	public Position getPosition() {
@@ -44,6 +53,7 @@ public class CelestialBody {
 	}
 
 	/**
+	 * @author Gabriele
 	 * @param the mass to set
 	 */
 	public void setMass(double mass) {
@@ -51,6 +61,7 @@ public class CelestialBody {
 	}
 
 	/**
+	 * @author Gabriele
 	 * @param the position to set
 	 */
 	public void setPosition(Position position) {
@@ -59,6 +70,7 @@ public class CelestialBody {
 
 	/**
 	 * Check if two {@code CelestialBody} are the same
+	 * @author Gabriele
 	 * @param celestialBody
 	 * @return {@code true} if {@code this} CelestialBody is equals as that passed as parameter
 	 */

@@ -7,6 +7,13 @@ public class Star extends CelestialBody {
 
 	private  ArrayList<Planet> planets;
 	
+	/**
+	 * Constructor of the {@code Star}
+	 * @author Gabriele
+	 * @param name
+	 * @param mass
+	 * @param position
+	 */
 	public Star(String name, double mass, Position position) {
 		super(name, mass, position);
 		this.planets = new ArrayList<Planet>();
@@ -14,6 +21,7 @@ public class Star extends CelestialBody {
 
 	/**
 	* Add a new {@code Planet} that orbits around {@code this} star
+	@author Gabriele
 	* @param planet
 	*/
 	public void addPlanet(Planet planet) {
@@ -28,6 +36,7 @@ public class Star extends CelestialBody {
 
 	/**
 	 * Add new several {@code Planet} that orbit around {@code this} star
+	 * @author Gabriele
 	 * @param planets
 	 */
 	public void addPlanets(ArrayList<Planet> planets) {
@@ -44,6 +53,7 @@ public class Star extends CelestialBody {
 
 	/**
 	 * Get the {@code Planet} specified by the id
+	 * @author Gabriele
 	 * @param id
 	 * @return the {@code Planet} specified
 	 */
@@ -60,6 +70,7 @@ public class Star extends CelestialBody {
 	/**
 	 * Get the {@code Planet} specified by the name
 	 * If there are several planets with the same name, only the first will be retuned
+	 * @author Gabriele
 	 * @param name
 	 * @return the {@code Planet} specified
 	 */
@@ -75,6 +86,7 @@ public class Star extends CelestialBody {
 
 	/**
 	 * Get the {@code Planet} specified by the position
+	 * @author Gabriele
 	 * @param position
 	 * @return the {@code Planet} specified
 	 */
@@ -90,6 +102,7 @@ public class Star extends CelestialBody {
 
 	/**
 	 * Remove the {@code Planet} specified by the id
+	 * @author Gabriele
 	 * @param id
 	 */
 	public void removePlanetById(String id) {
@@ -101,6 +114,7 @@ public class Star extends CelestialBody {
 	/**
 	 * Remove the {@code Planet} specified by the name
 	 * If there are several planets with the same name, only the first will be removed
+	 * @author Gabriele
 	 * @param name
 	 */
 	public void removePlanetByName(String name) {
@@ -111,6 +125,7 @@ public class Star extends CelestialBody {
 
 	/**
 	 * Remove the {@code Planet} specified by the position
+	 * @author Gabriele
 	 * @param position
 	 */
 	public void removePlanetByPosition(Position position) {
@@ -120,6 +135,7 @@ public class Star extends CelestialBody {
 	}
 
 	/**
+	 * @author Gabriele
 	 * @return the planets
 	 */
 	public ArrayList<Planet> getPlanets() {

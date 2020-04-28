@@ -2,6 +2,8 @@ package center.of.mass;
 
 import java.util.ArrayList;
 
+import exceptions.InvalidPositionException;
+
 public class StarSystem {
 	/**The {@linkplain StarSystem} CENTER {@value }*/
 	public static final Position CENTER = new Position(0, 0);
@@ -9,6 +11,11 @@ public class StarSystem {
 	private Star star;
 	private Position centerOfMass;
 
+	/**
+	 * Constructor of {@code StartSystem}
+	 * @author Gabriele
+	 * @param star
+	 */
 	public StarSystem(Star star) {
 		this.star = star;
 
@@ -62,19 +69,29 @@ public class StarSystem {
 
 	/**
 	 * Add a new {@code Planet} in {@code this} SolarSystem
+	 * @author Gabriele
 	 * @param planet
 	 */
-	public void addPlanet(Planet planet) {
+	public void addPlanet(Planet planet) throws InvalidPositionException {
+		if(!isValidPosition(planet.getPosition())) {
+			throw new InvalidPositionException("The position of the planet is already occupied by another celestial body");
+		}
+
 		this.star.addPlanet(planet);
 	}
 
 	/**
 	 * Add a new {@linkplain Moon} in {@code this} SolarSystem which orbits around
 	 * the {@linkplain Planet} specified by the id
+	 * @author Gabriele
 	 * @param moon 
 	 * @param idOfPlanet
 	 */
-	public void addMoonToPlanetWithId(Moon moon, String idOfPlanet) {
+	public void addMoonToPlanetWithId(Moon moon, String idOfPlanet) throws InvalidPositionException {
+		if(!isValidPosition(moon.getPosition())) {
+			throw new InvalidPositionException("The position of the moon is already occupied by another celestial body");
+		}
+
 		Planet planet = this.star.getPlanetById(idOfPlanet);
 
 		if(planet == null) {
@@ -87,10 +104,15 @@ public class StarSystem {
 	/**
 	 * Add a new {@linkplain Moon} in {@code this} SolarSystem which orbits around
 	 * the {@linkplain Planet}  specified by the name
+	 * @author Gabriele
 	 * @param moon 
 	 * @param nameOfPlanet
 	 */
-	public void addMoonToPlanetWithName(Moon moon, String nameOfPlanet) {
+	public void addMoonToPlanetWithName(Moon moon, String nameOfPlanet) throws InvalidPositionException {
+		if(!isValidPosition(moon.getPosition())) {
+			throw new InvalidPositionException("The position of the moon is already occupied by another celestial body");
+		}
+
 		Planet planet = this.star.getPlanetByName(nameOfPlanet);
 
 		if(planet == null) {
@@ -101,9 +123,107 @@ public class StarSystem {
 	}
 
 	/**
+	 * Get all the {@code Planet} od the {@code StarSystem}
+	 * @return the planets
+	 */
+	public ArrayList<Planet> getPlanets() {
+		return this.star.getPlanets();
+	}
+
+	/**
+	 * Get all the {@code Moon} od the {@code StarSystem}
+	 * @return the moons
+	 */
+	public ArrayList<Moon> getMoons() {
+		ArrayList<Moon> moons = new ArrayList<Moon>();
+
+		for(Planet planet : this.star.getPlanets()) {
+			moons.addAll(planet.getMoons());
+		}
+
+		return moons;
+	}
+
+	/**
+	 * Get all the {@code Moon} which orbits around a specified {@code Planet}
+	 * @param planetName the planet name
+	 * @return the moons
+	 */
+	public ArrayList<Moon> getMoons(String planetName) {
+		Planet planet = this.star.getPlanetByName(planetName);
+
+		return planet == null 
+			? new ArrayList<Moon>() 
+			: planet.getMoons();
+	}
+
+	/**
+	 * Remove the {@code Planet} specified by the id from the {@code StarSystem}
+	 * @author Gabriele
+	 * @param id
+	 */
+	public void removePlanetById(String id) {
+		this.star.removePlanetById(id);
+	}
+
+	/**
+	 * Remove the {@code Planet} specified by the name from the {@code StarSystem}
+	 * @author Gabriele
+	 * @param name
+	 */
+	public void removePlanetByName(String name) {
+		this.star.removePlanetByName(name);
+	}
+
+	/**
+	 * Remove the {@code Moon} specified by the id from the {@code StarSystem}
+	 * @author Gabriele
+	 * @param id
+	 */
+	public void removeMoonById(String id) {
+		for(Planet planet : this.star.getPlanets()) {
+			planet.removeMoonById(id);
+		}
+	}
+
+	/**
+	 * Remove the {@code Moon} specified by the name from the {@code StarSystem}
+	 * @author Gabriele
+	 * @param name
+	 */
+	public void removeMoonByName(String name) {
+		for(Planet planet : this.star.getPlanets()) {
+			planet.removeMoonByName(name);
+		}
+	}
+
+	/**
+	 * @author Gabriele
 	 * @return the centerOfMass
 	 */
 	public Position getCenterOfMass() {
 		return centerOfMass;
+	}
+
+	/**
+	 * Check if the specified position is already occupied by a {@code CelestialBody}
+	 * @author Gabriele
+	 * @param position
+	 * @return {@code tue} if the position is already occupied, {@code false} otherwise
+	 */
+	private boolean isValidPosition(Position position) {
+		ArrayList<CelestialBody> celestialBodies = new ArrayList<CelestialBody>();
+
+		celestialBodies.add(this.star);
+		celestialBodies.addAll(this.getPlanets());
+		celestialBodies.addAll(this.getMoons());
+
+		for(CelestialBody celestialBody : celestialBodies) {
+			if(position.equals(celestialBody.getPosition())) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 }
