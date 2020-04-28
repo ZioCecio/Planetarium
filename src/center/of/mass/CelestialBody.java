@@ -65,4 +65,18 @@ public class CelestialBody {
 	public boolean equals(CelestialBody celestialBody) {
 		return this.name == celestialBody.name && this.mass == celestialBody.mass;
 	}
+	/**@return a {@linkplain String} indicating what type of {@linkplain CelestialBody} it is.<blockquote>
+	 * if it don't found any corrisponce ->{@code null}</blockquote>
+	 * @author Simone*/
+	public String whicCelestialBodyIs() {
+		String id = null;
+		if (this instanceof Planet) {
+			id = "P";
+		} else if (this instanceof Moon) {
+			id = "M";
+		} else if (this instanceof Star) {
+			id = "S";
+		}
+		return id;
+	}
 }

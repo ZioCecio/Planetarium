@@ -1,19 +1,7 @@
 package collision;
 
 public class Collision {
-//	public static void Collision(CelestialBody c1, CelestialBody c2) {
-//		if(c1 instanceof Star)
-//			if(c2 instanceof Moon)
-//			{
-//				Con
-//			}
-//		
-//		
-//	}
-//	
-//	private static void StarPlanetCollision(Star s, Planet p) {
-//		Collision(s, p);
-//	}
+
 	
 }
 /*Praticamente, avendo il raggio_di_rivoluzione, ordino i pianeti tramite quello(si cerca un algoritmo che fa questo lavoro)
