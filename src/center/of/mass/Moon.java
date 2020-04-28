@@ -1,5 +1,7 @@
 package center.of.mass;
 
+import it.unibs.fp.mylib.MyMath;
+
 public class Moon extends CelestialBody {
 	private double radius;
 	private Planet planet;
@@ -13,11 +15,12 @@ public class Moon extends CelestialBody {
 
 	/**
 	 * Calculate the radius of the orbit
-	 * @param planet
 	 * @return the radius of the orbit
+	 * @author Gabriele, edited by Simone 
 	 */
-	private double calcRadius(Planet planet) {
-		return Math.sqrt(Math.pow(this.planet.getPosition().getX() - this.getPosition().getX(), 2) + Math.pow(this.planet.getPosition().getY() - this.getPosition().getY(), 2));
+	private double calcRadius() {
+		return MyMath.distance(planet.getPosition().getX(), this.getPosition().getX(), planet.getPosition().getY(),
+				this.getPosition().getY());
 	}
 
 	/**
@@ -28,18 +31,18 @@ public class Moon extends CelestialBody {
 	}
 
 	/**
-	 * @return the planet
+	 * @return the {@linkplain Planet} which {@code this} {@linkplain Moon} orbits
 	 */
 	public Planet getPlanet() {
 		return planet;
 	}
 
 	/**
-	 * @param planet the planet to set
+	 *@param the {@linkplain Planet} which {@code this} {@linkplain Moon} orbits
 	 */
 	public void setPlanet(Planet planet) {
 		this.planet = planet;
 
-		this.radius = this.calcRadius(planet);
+		this.radius = this.calcRadius();
 	}
 }

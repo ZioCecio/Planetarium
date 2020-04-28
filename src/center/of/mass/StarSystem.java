@@ -69,8 +69,8 @@ public class StarSystem {
 	}
 
 	/**
-	 * Add a new {@code Moon} in {@code this} SolarSystem which orbits around
-	 * the {@code Planet} specified by the id
+	 * Add a new {@linkplain Moon} in {@code this} SolarSystem which orbits around
+	 * the {@linkplain Planet} specified by the id
 	 * @param moon 
 	 * @param idOfPlanet
 	 */
@@ -85,8 +85,8 @@ public class StarSystem {
 	}
 	
 	/**
-	 * Add a new {@code Moon} in {@code this} SolarSystem which orbits around
-	 * the {@code Planet} specified by the name
+	 * Add a new {@linkplain Moon} in {@code this} SolarSystem which orbits around
+	 * the {@linkplain Planet}  specified by the name
 	 * @param moon 
 	 * @param nameOfPlanet
 	 */

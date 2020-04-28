@@ -7,7 +7,6 @@ public class Position {
 	 * riferimento il sole in posizione (0,0)
 	 * 
 	 */
-	/** empty constructor */
 
 	private static final String FRAME_1 = "(";
 	private static final String FRAME_2 = ")";
@@ -39,7 +38,7 @@ public class Position {
 	/**
 	 * set {@linkplain #x} attribute
 	 * 
-	 * @param
+	 * @param x to set
 	 * @author Alessandra
 	 */
 	public void setX(double x) {
@@ -58,7 +57,7 @@ public class Position {
 	/**
 	 * set {@linkplain #y} attribute
 	 * 
-	 * @param
+	 * @param y to set
 	 * @author Alessandra
 	 */
 	public void setY(double y) {

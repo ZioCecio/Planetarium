@@ -1,6 +1,5 @@
 package center.of.mass;
 
-import java.util.UUID;
 
 public class CelestialBody {
 	private String id;
@@ -9,10 +8,11 @@ public class CelestialBody {
 	private Position position;
 	
 	public CelestialBody(String name, double mass, Position position) {
-		this.id = UUID.randomUUID().toString();
+		
 		this.name = name;
 		this.mass = mass;
 		this.position = position;
+		this.id = IdGenerator.create(this);
 	}
 
 	/**
@@ -44,14 +44,14 @@ public class CelestialBody {
 	}
 
 	/**
-	 * @param mass the mass to set
+	 * @param the mass to set
 	 */
 	public void setMass(double mass) {
 		this.mass = mass;
 	}
 
 	/**
-	 * @param position the position to set
+	 * @param the position to set
 	 */
 	public void setPosition(Position position) {
 		this.position = position;
