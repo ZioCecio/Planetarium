@@ -2,25 +2,53 @@ package center.of.mass;
 
 import java.util.ArrayList;
 
+import it.unibs.fp.mylib.MyMath;
+
 public class Planet extends CelestialBody {
 	private static final int MAX_MOONS = 5000;
 
 	private ArrayList<Moon> moons;
 	private double radius;
 	private Star star;
-
 	/**
-	 * Constructor of the {@code Planet}
-	 * @author Gabriele
+	 * <h1>Constructor with minimal attributes</h1> the {@linkplain #star}
+	 * attribute will set when {@code this} {@linkplain Planet}, will added to the
+	 * {@linkplain Star} {@linkplain Planet} {@linkplain ArrayList}
+	 * 
 	 * @param name
+	 *            is the {@code name }of {@code this }new {@linkplain Planet}
 	 * @param mass
+	 *            is the {@code mass }of {@code this }new {@linkplain Planet}
 	 * @param position
+	 *            is the {@linkplain Position} of {@code this }new {@linkplain Planet}
+	 * @see {@linkplain Star#addPlanet(Planet)}
+	 * @author Simone, edited by Gabriele
 	 */
 	public Planet(String name, double mass, Position position) {
 		super(name, mass, position);
 		this.star = null;
-		this.radius = 0;
+		this.radius =0;
 		this.moons = new ArrayList<Moon>();
+	}
+
+	/**
+	 * <h1>Constructor where is specified the {@linkplain #star} attribute</h1> 
+	 * @param name
+	 *            is the {@code name }of {@code this }new {@linkplain Planet}
+	 * @param mass
+	 *            is the {@code mass }of {@code this }new {@linkplain Planet}
+	 * @param position
+	 *            is the {@linkplain Position} of {@code this }new {@linkplain Planet}
+	 
+	 * @param star
+	 *            is the {@linkplain Star} where {@code this } new
+	 *            {@linkplain Planet} will orbit
+	 * @author Simone
+	 */
+	 public Planet(String name, double mass, Position position, Star star) {
+		super(name, mass, position);
+		this.star = star;
+		this.radius = calcRadius();
 	}
 
 	public double partialXMoon() {
@@ -186,8 +214,8 @@ public class Planet extends CelestialBody {
 	 * @param star
 	 * @return the radius of the orbit
 	 */
-	private double calcRadius(Star star) {
-		return Math.sqrt(Math.pow(this.star.getPosition().getX() - this.getPosition().getX(), 2) + Math.pow(this.star.getPosition().getY() - this.getPosition().getY(), 2));
+	private double calcRadius() {
+		return MyMath.distance(star.getPosition().getX(), this.getPosition().getX(), star.getPosition().getY(), this.getPosition().getY());
 	}
 
 	/**
@@ -221,7 +249,7 @@ public class Planet extends CelestialBody {
 	public void setStar(Star star) {
 		this.star = star;
 
-		this.radius = this.calcRadius(star);
+		this.radius = this.calcRadius();
 	}
 
 	@Override

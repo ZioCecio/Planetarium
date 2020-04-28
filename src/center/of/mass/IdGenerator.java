@@ -26,19 +26,11 @@ public class IdGenerator {
 	 * duplications
 	 * 
 	 * @see {@linkplain Position}, {@linkplain LocalDateTime}, {@linkplain UUID}
-	 * @param 
+	 * @param
 	 * @author Alessandra, edited by Simone
 	 */
 	public static String create(CelestialBody celestial_body) {
-		String id = null;
-		if (celestial_body instanceof Planet) {
-			id = "P";
-		} else if (celestial_body instanceof Moon) {
-			id = "M";
-		} else if (celestial_body instanceof Star) {
-			id = "S";
-		}
-		String position = celestial_body.getPosition().toString();
-		return id + position + LocalDateTime.now() + UUID.randomUUID();
+		return celestial_body.whicCelestialBodyIs() + celestial_body.getPosition().toString() + LocalDateTime.now()
+				+ UUID.randomUUID();
 	}
 }
