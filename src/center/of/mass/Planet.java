@@ -120,7 +120,7 @@ public class Planet extends CelestialBody {
 	}
 
 	/**
-	 * Get the {@code Moon} specified by the name
+	 * Get the {@code Moon} specified by the position
 	 * @param position
 	 * @return the {@code Moon} specified
 	 */
@@ -132,6 +132,37 @@ public class Planet extends CelestialBody {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Remove the {@code Moon} specified by the id
+	 * @param id
+	 */
+	public void removeMoonById(String id) {
+		Moon moon = this.getMoonById(id);
+
+		this.moons.remove(moon);
+	}
+
+	/**
+	 * Remove the {@code Moon} specified by the name
+	 * If there are several moons with the same name, only the first will be removed
+	 * @param name
+	 */
+	public void removeMoonByName(String name) {
+		Moon moon = this.getMoonByName(name);
+
+		this.moons.remove(moon);
+	}
+
+	/**
+	 * Remove the {@code Moon} specified by the position
+	 * @param position
+	 */
+	public void removeMoonByPosition(Position position) {
+		Moon moon = this.getMoonByPosition(position);
+
+		this.moons.remove(moon);
 	}
 
 	/**

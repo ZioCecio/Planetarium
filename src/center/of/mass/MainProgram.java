@@ -14,9 +14,10 @@ public class MainProgram {
 
 		StarSystem starSystem = new StarSystem(sole);
 
-		sole.addPlanet(pianeta1);
+		starSystem.addPlanet(pianeta1);
+		starSystem.addPlanet(pianeta2);
 
-		System.out.println(pianeta1.getStar().getName());
+		System.out.println(pianeta2.getStar().getName());
 	}
 
 }

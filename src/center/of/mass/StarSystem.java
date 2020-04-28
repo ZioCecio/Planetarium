@@ -61,6 +61,46 @@ public class StarSystem {
 	}
 
 	/**
+	 * Add a new {@code Planet} in {@code this} SolarSystem
+	 * @param planet
+	 */
+	public void addPlanet(Planet planet) {
+		this.star.addPlanet(planet);
+	}
+
+	/**
+	 * Add a new {@code Moon} in {@code this} SolarSystem which orbits around
+	 * the {@code Planet} specified by the id
+	 * @param moon 
+	 * @param idOfPlanet
+	 */
+	public void addMoonToPlanetWithId(Moon moon, String idOfPlanet) {
+		Planet planet = this.star.getPlanetById(idOfPlanet);
+
+		if(planet == null) {
+			return;
+		}
+
+		planet.addMoon(moon);
+	}
+	
+	/**
+	 * Add a new {@code Moon} in {@code this} SolarSystem which orbits around
+	 * the {@code Planet} specified by the name
+	 * @param moon 
+	 * @param nameOfPlanet
+	 */
+	public void addMoonToPlanetWithName(Moon moon, String nameOfPlanet) {
+		Planet planet = this.star.getPlanetByName(nameOfPlanet);
+
+		if(planet == null) {
+			return;
+		}
+
+		planet.addMoon(moon);
+	}
+
+	/**
 	 * @return the centerOfMass
 	 */
 	public Position getCenterOfMass() {

@@ -74,11 +74,11 @@ public class Star extends CelestialBody {
 	}
 
 	/**
-	 * Get the {@code Moon} specified by the name
+	 * Get the {@code Planet} specified by the position
 	 * @param position
-	 * @return the {@code Moon} specified
+	 * @return the {@code Planet} specified
 	 */
-	public Planet getMoonByPosition(Position position) {
+	public Planet getPlanetByPosition(Position position) {
 		for(Planet planet : this.planets) {
 			if(planet.getPosition().equals(position)) {
 				return planet;
@@ -86,6 +86,37 @@ public class Star extends CelestialBody {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Remove the {@code Planet} specified by the id
+	 * @param id
+	 */
+	public void removePlanetById(String id) {
+		Planet planet = this.getPlanetById(id);
+
+		this.planets.remove(planet);
+	}
+
+	/**
+	 * Remove the {@code Planet} specified by the name
+	 * If there are several planets with the same name, only the first will be removed
+	 * @param name
+	 */
+	public void removePlanetByName(String name) {
+		Planet planet = this.getPlanetByName(name);
+
+		this.planets.remove(planet);
+	}
+
+	/**
+	 * Remove the {@code Planet} specified by the position
+	 * @param position
+	 */
+	public void removePlanetByPosition(Position position) {
+		Planet planet = this.getPlanetByPosition(position);
+
+		this.planets.remove(planet);
 	}
 
 	/**
