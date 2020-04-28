@@ -1,56 +1,68 @@
 package center.of.mass;
 
-/**Mother class representing any celestial body
- * @author Alessandra, edited by Simone
- * */
+import java.util.UUID;
+
 public class CelestialBody {
 	private String id;
+	private String name;
 	private double mass;
 	private Position position;
 	
-
-	/**<h1>Constructor with attributes</h1>
-	 * @author Simone*/
-	public CelestialBody(double mass, Position position) {
-		setMass(mass);
-		setPosition(position);
-		setId();
-	}
-	/**<h1>empty constructor</h1>
-	 * @author Simone*/
-	public CelestialBody() {
-		super();
-	}
-	/**
-	 * @author Alessandra*/
-	public double getMass() {
-		return mass;
-	}
-	
-	/**
-	 * @author Alessandra*/
-	public void setMass(double mass) {
+	public CelestialBody(String name, double mass, Position position) {
+		this.id = UUID.randomUUID().toString();
+		this.name = name;
 		this.mass = mass;
-	}
-	/**
-	 * @author Alessandra*/
-	public Position getPosition() {
-		return position;
-	}
-	/**
-	 * @author Alessandra*/
-	public void setPosition(Position position) {
 		this.position = position;
 	}
+
 	/**
-	 * @author Alessandra*/
+	 * @return the id
+	 */
 	public String getId() {
 		return id;
 	}
+
 	/**
-	 * @author Alessandra*/
-	private void setId() {
-		this.id = IdGenerator.create(this);
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
-	
+
+	/**
+	 * @return the mass
+	 */
+	public double getMass() {
+		return mass;
+	}
+
+	/**
+	 * @return the position
+	 */
+	public Position getPosition() {
+		return position;
+	}
+
+	/**
+	 * @param mass the mass to set
+	 */
+	public void setMass(double mass) {
+		this.mass = mass;
+	}
+
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+
+	/**
+	 * Check if two {@code CelestialBody} are the same
+	 * @param celestialBody
+	 * @return {@code true} if {@code this} CelestialBody is equals as that passed as parameter
+	 */
+	public boolean equals(CelestialBody celestialBody) {
+		return this.name == celestialBody.name && this.mass == celestialBody.mass;
+	}
 }

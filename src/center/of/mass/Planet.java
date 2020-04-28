@@ -2,93 +2,18 @@ package center.of.mass;
 
 import java.util.ArrayList;
 
-import it.unibs.fp.mylib.*;
-
 public class Planet extends CelestialBody {
-	private static final String NO_SPACE = "No space left";
-	private static final String NO_MOONS = "This planet has no moons";
-	private static final String FOUND_MOON = "Moon has been found";
-	private static final int LIM_MOONS = 5000;
+	private static final int MAX_MOONS = 5000;
+
 	private ArrayList<Moon> moons;
 	private double radius;
+	private Star star;
 
-	public Planet(double mass, Position position) {
-		super(mass, position);
-		setRadius();
-	}
-
-	public Planet() {
-
-	}
-
-	public void setMoons(ArrayList<Moon> moons) {
-		this.moons = moons;
-	}
-
-	/**
-	 * @author Alessandra
-	 */
-	public double getRadius() {
-		return radius;
-	}
-
-	/**
-	 * @author Simone
-	 */
-	private void setRadius() {
-		this.radius = RadiusGenerator.create(this);
-	}
-
-	public ArrayList<Moon> getMoons() {
-		return moons;
-	}
-
-	public Moon lookForMoon(Position pos) {
-		boolean foundMoonX = false;
-		boolean foundMoonY = false;
-		try {
-			for (int i = 0; i < moons.size(); i++) {
-				Moon m = new Moon();
-				m = moons.get(i);
-				foundMoonX = MyMath.compareDouble(m.getPosition().getX(), pos.getX());
-				foundMoonY = MyMath.compareDouble(m.getPosition().getY(), pos.getY());
-				if (foundMoonX && foundMoonY) {
-					System.out.println(FOUND_MOON);
-					return m;
-				}
-			}
-		} catch (Exception NullPointerException) {
-			return null;
-		}
-		return null;
-	}
-
-	public void displayMoons() {
-
-		try {
-			for (int i = 0; i < moons.size(); i++) {
-				Moon m = new Moon();
-				m = moons.get(i);
-				System.out.println(m.getId());
-			}
-		} catch (Exception NullPointerException) {
-			System.out.println(NO_MOONS);
-		}
-	}
-
-	public void actionMoon(int label) {
-		switch (label) {
-		case 1:
-			Moon m1 = PlanetariumUtils.readMoon();
-			checkPlace(m1);
-			break;
-		case 2:
-			moons.remove(lookForMoon(PlanetariumUtils.readPosition()));
-			break;
-		default:
-			System.out.println("Error");
-			break;
-		}
+	public Planet(String name, double mass, Position position) {
+		super(name, mass, position);
+		this.star = null;
+		this.radius = 0;
+		this.moons = new ArrayList<Moon>();
 	}
 
 	public double partialXMoon() {
@@ -133,13 +58,118 @@ public class Planet extends CelestialBody {
 		return totalMass;
 	}
 
-	public void checkPlace(Moon m) {
-		if (moons.size() < LIM_MOONS) {
-			moons.add(m);
-		} else {
-			System.out.println(NO_SPACE);
+	/**
+	 * Add a new {@code Moon} that orbits around {@code this} planet
+	 * @param moon
+	 */
+	public void addMoon(Moon moon) {
+		if(this.moons.size() >= MAX_MOONS) {
+			return;
 		}
 
+		moon.setPlanet(this);
+
+		this.moons.add(moon);
 	}
 
+	/**
+	 * Add new several {@code Moon} that orbit around {@code this} planet
+	 * @param moons
+	 */
+	public void addMoons(ArrayList<Moon> moons) {
+		if(this.moons.size() >= MAX_MOONS + moons.size()) {
+			return;
+		}
+
+		for(Moon moon : this.moons) {
+			moon.setPlanet(this);
+		}
+
+		this.moons.addAll(moons);
+	}
+
+	/**
+	 * Get the {@code Moon} specified by the id
+	 * @param id
+	 * @return the {@code Moon} specified
+	 */
+	public Moon getMoonById(String id) {
+		for(Moon moon : this.moons) {
+			if(moon.getId().equals(id)) {
+				return moon;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Get the {@code Moon} specified by the name
+	 * If there are several moons with the same name, only the first will be retuned
+	 * @param name
+	 * @return the {@code Moon} specified
+	 */
+	public Moon getMoonByName(String name) {
+		for(Moon moon : this.moons) {
+			if(moon.getName().equals(name)) {
+				return moon;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Get the {@code Moon} specified by the name
+	 * @param position
+	 * @return the {@code Moon} specified
+	 */
+	public Moon getMoonByPosition(Position position) {
+		for(Moon moon : this.moons) {
+			if(moon.getPosition().equals(position)) {
+				return moon;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Calculate the radius of the orbit
+	 * @param star
+	 * @return the radius of the orbit
+	 */
+	private double calcRadius(Star star) {
+		return Math.sqrt(Math.pow(this.star.getPosition().getX() - this.getPosition().getX(), 2) + Math.pow(this.star.getPosition().getY() - this.getPosition().getY(), 2));
+	}
+
+	/**
+	 * @return the moons
+	 */
+	public ArrayList<Moon> getMoons() {
+		return moons;
+	}
+
+	/**
+	 * @return the star
+	 */
+	public Star getStar() {
+		return star;
+	}
+
+	/**
+	 * @return the radius
+	 */
+	public double getRadius() {
+		return radius;
+	}
+
+	/**
+	 * @param star the star to set
+	 */
+	public void setStar(Star star) {
+		this.star = star;
+
+		this.radius = this.calcRadius(star);
+	}
 }

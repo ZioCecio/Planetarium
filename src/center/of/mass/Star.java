@@ -2,100 +2,96 @@ package center.of.mass;
 
 import java.util.ArrayList;
 
-import center.of.mass.Planet;
-import it.unibs.fp.mylib.*;
-
 public class Star extends CelestialBody {
-	
-	private static final String NO_SPACE = "No space left";
-	private static final String FOUND = "Planet has been found";
-	private static final int LIM_PLANETS = 26000;
+	private static final int MAX_PLANETS = 26000;
+
 	private  ArrayList<Planet> planets;
 	
-	public Star(double mass) {
-		super(mass, StarSystem.CENTER);
+	public Star(String name, double mass, Position position) {
+		super(name, mass, position);
+		this.planets = new ArrayList<Planet>();
 	}
 
+	/**
+	* Add a new {@code Planet} that orbits around {@code this} star
+	* @param planet
+	*/
+	public void addPlanet(Planet planet) {
+		if(this.planets.size() >= MAX_PLANETS) {
+			return;
+		}
+
+		planet.setStar(this);
+
+		this.planets.add(planet);
+	}
+
+	/**
+	 * Add new several {@code Planet} that orbit around {@code this} star
+	 * @param planets
+	 */
+	public void addPlanets(ArrayList<Planet> planets) {
+		if(this.planets.size() >= MAX_PLANETS + planets.size()) {
+			return;
+		}
+
+		for(Planet planet : this.planets) {
+			planet.setStar(this);
+		}
+
+		this.planets.addAll(planets);
+	}
+
+	/**
+	 * Get the {@code Planet} specified by the id
+	 * @param id
+	 * @return the {@code Planet} specified
+	 */
+	public Planet getPlanetById(String id) {
+		for(Planet planet : this.planets) {
+			if(planet.getId().equals(id)) {
+				return planet;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Get the {@code Planet} specified by the name
+	 * If there are several planets with the same name, only the first will be retuned
+	 * @param name
+	 * @return the {@code Planet} specified
+	 */
+	public Planet getPlanetByName(String name) {
+		for(Planet planet : this.planets) {
+			if(planet.getName().equals(name)) {
+				return planet;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Get the {@code Moon} specified by the name
+	 * @param position
+	 * @return the {@code Moon} specified
+	 */
+	public Planet getMoonByPosition(Position position) {
+		for(Planet planet : this.planets) {
+			if(planet.getPosition().equals(position)) {
+				return planet;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * @return the planets
+	 */
 	public ArrayList<Planet> getPlanets() {
 		return planets;
 	}
-
-	public void setPlanets(ArrayList<Planet> planets) {
-		this.planets = planets;
-	}
-	/*
-	 * action on the planets are managed by the star
-	 * w/o using getters and setters
-	 */
-	public void actionPlanet(int label) {
-		Planet p1 = new Planet();
-		switch (label) {
-		case 1:
-			p1 = PlanetariumUtils.readPlanet();
-			checkPlace(p1);
-			break;
-		case 2:
-			p1 = (Planet) lookForPlanet(PlanetariumUtils.readPosition());
-			try{
-				p1.getMoons().removeAll(p1.getMoons());
-				planets.remove(p1);
-			}
-			catch(Exception NullPointerException){
-				planets.remove(p1);
-			}
-			break;
-		default:
-			System.err.println("Error");
-		}
-	}
-/*
- * per la ricerca di un corpo celeste utilizzo 
- * la posizione che assumo essere univoca
- * in Planetarium.Utils si fa un controllo anche
- * di questo tipo
- * tutto questo gestito dallo starSystem
- * che controlla anche la posizione del sole 
- * che assumo essere (0,0)
- * 
- */
-
-	public CelestialBody lookForPlanet(Position pos) {
-		boolean planetContainX = false;
-		boolean planetContainY = false;
-		Planet p1=new Planet();
-		for (int i = 0; i < planets.size(); i++) {
-			p1=planets.get(i);
-			planetContainX = MyMath.compareDouble(p1.getPosition().getX(), pos.getX());
-			planetContainY = MyMath.compareDouble(p1.getPosition().getY(), pos.getY());
-			if (planetContainX && planetContainY) {
-				System.out.println(FOUND);
-				return p1;
-			}
-			else {
-				Moon m=new Moon();
-				try{
-					m=p1.lookForMoon(pos);
-					return m;
-				}
-				catch(Exception NullPointerException) {
-					m=null;
-				}
-			}
-		}
-		return null;
-		
-	}
-	private void checkPlace(Planet p) {
-		if(planets.size()<LIM_PLANETS) {
-			planets.add(p);
-		}
-		else {
-			System.out.println(NO_SPACE);
-		}
-	}
-	
-//	public Star(ArrayList<Planet> planet) {
-//		super();
-//		this.planets=planet;
-//	}
 }

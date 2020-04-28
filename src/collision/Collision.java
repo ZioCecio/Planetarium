@@ -1,10 +1,5 @@
 package collision;
 
-import center.of.mass.CelestialBody;
-import center.of.mass.Moon;
-import center.of.mass.Planet;
-import center.of.mass.Star;
-
 public class Collision {
 //	public static void Collision(CelestialBody c1, CelestialBody c2) {
 //		if(c1 instanceof Star)

@@ -12,6 +12,7 @@ public class Position {
 	private static final String FRAME_1 = "(";
 	private static final String FRAME_2 = ")";
 	private static final String COMMA = ",";
+
 	private double x;
 	private double y;
 
@@ -22,12 +23,8 @@ public class Position {
 	 * @author Simone
 	 */
 	public Position(double x, double y) {
-		setX(x);
-		setY(y);
-	}
-
-	public Position() {
-		super();
+		this.x = x;
+		this.y = y;
 	}
 
 	/**
@@ -76,6 +73,15 @@ public class Position {
 	 */
 	public String toString() {
 		return FRAME_1 + getX() + COMMA + getY() + FRAME_2;
+	}
+
+	/**
+	 * Check if two {@code Position} are the same
+	 * @param position
+	 * @return {@code true} if {@code this} position is equals as that passed as parameter
+	 */
+	public boolean equals(Position position) {
+		return this.x == position.x && this.y == position.y;
 	}
 
 }
