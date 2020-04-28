@@ -65,6 +65,11 @@ public class PlanetariumUtils {
 		return mass;
 	}
 
+	/**
+	 * Write to the cmd the names of the celestial bodies specified
+	 * @author Gabriele
+	 * @param celestialBodies
+	 */
 	public static void showCelestialBodiesNames(ArrayList<CelestialBody> celestialBodies) {
 		for(CelestialBody celestialBody : celestialBodies) {
 			System.out.println("-> " + celestialBody.getName());

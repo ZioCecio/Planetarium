@@ -226,6 +226,18 @@ public class Planet extends CelestialBody {
 
 	@Override
 	public String toString() {
-		return "Planet " + this.getName() + " with mass " + this.getMass() + " in position " + this.getPosition();
+		String string = String.format("Planet %s with mass %.2f in position %s", this.getName(), this.getMass(), this.getPosition());
+
+		if(this.moons.size() == 0) {
+			return string;
+		}
+
+		string = string.concat("\nMoons which orbit around:");
+
+		for(Moon moon : this.moons) {
+			string = string.concat(String.format("\n->%s", moon.getName()));
+		}
+
+		return string;
 	}
 }

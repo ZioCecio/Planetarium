@@ -55,4 +55,15 @@ public class Moon extends CelestialBody {
 
 		this.radius = this.calcRadius();
 	}
+
+	@Override
+	public String toString() {
+		String string = String.format("Moon %s with mass %.2f in position %s", this.getName(), this.getMass(), this.getPosition());
+
+		if(this.planet != null) {
+			string = string.concat(String.format(" which orbits around %s", this.planet.getName()));
+		}
+
+		return string;
+	}
 }

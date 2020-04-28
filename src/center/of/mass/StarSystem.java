@@ -2,6 +2,7 @@ package center.of.mass;
 
 import java.util.ArrayList;
 
+import exceptions.CelestialBodyNotFoundException;
 import exceptions.InvalidPositionException;
 
 public class StarSystem {
@@ -71,6 +72,7 @@ public class StarSystem {
 	 * Add a new {@code Planet} in {@code this} SolarSystem
 	 * @author Gabriele
 	 * @param planet
+	 * @throws InvalidPositionException if the position of the planet is already occupied by another celestial body
 	 */
 	public void addPlanet(Planet planet) throws InvalidPositionException {
 		if(!isValidPosition(planet.getPosition())) {
@@ -86,8 +88,10 @@ public class StarSystem {
 	 * @author Gabriele
 	 * @param moon 
 	 * @param idOfPlanet
+	 * @throws InvalidPositionException if the position of the moon is already occupied by another celestial body
+	 * @throws CelestialBodyNotFoundException if the planet with the specified id doesn't exist
 	 */
-	public void addMoonToPlanetWithId(Moon moon, String idOfPlanet) throws InvalidPositionException {
+	public void addMoonToPlanetWithId(Moon moon, String idOfPlanet) throws InvalidPositionException, CelestialBodyNotFoundException {
 		if(!isValidPosition(moon.getPosition())) {
 			throw new InvalidPositionException("The position of the moon is already occupied by another celestial body");
 		}
@@ -95,7 +99,7 @@ public class StarSystem {
 		Planet planet = this.star.getPlanetById(idOfPlanet);
 
 		if(planet == null) {
-			return;
+			throw new CelestialBodyNotFoundException("The planet with the spiecified id doesn't exist");
 		}
 
 		planet.addMoon(moon);
@@ -107,8 +111,10 @@ public class StarSystem {
 	 * @author Gabriele
 	 * @param moon 
 	 * @param nameOfPlanet
+	 * @throws InvalidPositionException if the position of the planet is already occupied by another celestial body
+	 * @throws CelestialBodyNotFoundException if the planet with the specified name doesn't exist
 	 */
-	public void addMoonToPlanetWithName(Moon moon, String nameOfPlanet) throws InvalidPositionException {
+	public void addMoonToPlanetWithName(Moon moon, String nameOfPlanet) throws InvalidPositionException, CelestialBodyNotFoundException {
 		if(!isValidPosition(moon.getPosition())) {
 			throw new InvalidPositionException("The position of the moon is already occupied by another celestial body");
 		}
@@ -116,18 +122,44 @@ public class StarSystem {
 		Planet planet = this.star.getPlanetByName(nameOfPlanet);
 
 		if(planet == null) {
-			return;
+			throw new CelestialBodyNotFoundException("The planet with the spiecified name doesn't exist");
 		}
 
 		planet.addMoon(moon);
 	}
 
 	/**
-	 * Get all the {@code Planet} od the {@code StarSystem}
+	 * Get all the {@code Planet} of the {@code StarSystem}
 	 * @return the planets
 	 */
 	public ArrayList<Planet> getPlanets() {
 		return this.star.getPlanets();
+	}
+
+	/**
+	 * Get the {@code Planet} with the specified name
+	 * @param name
+	 * @return the planet
+	 */
+	public Planet getPlanetByName(String name) {
+		return this.star.getPlanetByName(name);
+	}
+
+	/**
+	 * Get the {@code Moon} whit the specified name
+	 * @param name
+	 * @return the moon
+	 */
+	public Moon getMoonByName(String name) {
+		ArrayList<Moon> moons = this.getMoons();
+
+		for(Moon moon : moons) {
+			if(name.equals(moon.getName())) {
+				return moon;
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -153,7 +185,7 @@ public class StarSystem {
 		Planet planet = this.star.getPlanetByName(planetName);
 
 		return planet == null 
-			? new ArrayList<Moon>() 
+			? null
 			: planet.getMoons();
 	}
 

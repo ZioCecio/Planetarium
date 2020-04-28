@@ -2,6 +2,7 @@ package center.of.mass;
 
 import java.util.ArrayList;
 
+import exceptions.CelestialBodyNotFoundException;
 import exceptions.InvalidPositionException;
 import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.MyMenu;
@@ -28,8 +29,8 @@ public class Manager {
         this.initialMessage = initialMessage;
 
         this.mainMenu = new MyMenu("Planetarium", new String[] {"Manage planets", "Manage moons"});
-        this.planetMenu = new MyMenu("What do you want to do?", new String[] {"Add a new planet", "Remove a planet", "View a list of all planets"});
-        this.moonMenu = new MyMenu("What do you want to do?", new String[] {"Add a new moon", "Remove a moon", "View a list of all moons"});
+        this.planetMenu = new MyMenu("What do you want to do?", new String[] {"Add a new planet", "Remove a planet", "View a list of all planets", "View the information about a specific planet"});
+        this.moonMenu = new MyMenu("What do you want to do?", new String[] {"Add a new moon", "Remove a moon", "View a list of all moons", "View the information about a specific moon"});
     }
 
     /**
@@ -87,6 +88,10 @@ public class Manager {
                 case 3:
                     PlanetariumUtils.showCelestialBodiesNames(new ArrayList<CelestialBody>(this.starSystem.getPlanets()));
                     break;
+
+                case 4:
+                    this.viusalizeInfo(this.starSystem.getPlanetByName(InputDati.leggiStringa("Name of the planet to visualize: ")));
+                    break;
             }
 
         } while(choose != 0);
@@ -113,6 +118,9 @@ public class Manager {
                 case 3:
                     PlanetariumUtils.showCelestialBodiesNames(new ArrayList<CelestialBody>(this.starSystem.getMoons()));
                     break;
+
+                case 4:
+                    this.viusalizeInfo(this.starSystem.getMoonByName(InputDati.leggiStringa("Name of the moon to visualize: ")));
             }
 
         } while(choose != 0);
@@ -140,6 +148,8 @@ public class Manager {
                 this.writeOKMessage("Moon added succesfully!");
             } catch (InvalidPositionException exception) {
                 this.writeErrorMessage(exception.getMessage());
+            } catch (CelestialBodyNotFoundException exception) {
+                this.writeErrorMessage(exception.getMessage());
             }
         }
     }
@@ -164,6 +174,19 @@ public class Manager {
         this.starSystem.removeMoonByName(name);
 
         this.writeWarningMessage("Moon removed succesfully!");
+    }
+
+    /**
+     * Visualize the information about the specified {@code CelestialBody}
+     * @param celestialBody
+     */
+    private void viusalizeInfo(CelestialBody celestialBody) {
+        if(celestialBody == null) {
+            this.writeWarningMessage("The specified celestial body doesn't exist");
+        }
+        else {
+            this.writeOKMessage(celestialBody.toString());;
+        }
     }
 
     /**
