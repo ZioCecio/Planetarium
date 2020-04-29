@@ -13,6 +13,6 @@ public class Collision {
  *distMoonP2= prendo raggio_di_rivoluzione di P2 e lo sottraggo con la distanza della luna pi� vicina di P2
  *se � maggiore o uguale a distMoonP1 allora collide con tutte le altre lune sia di P1 che di P2
  *si continua a ripetere il processo finquando non si verifica una collisione 
- *0 O-o-o O-o-o
+ *0 O-o-o O- o-o
  * */
 
