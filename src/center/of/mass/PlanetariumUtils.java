@@ -30,7 +30,7 @@ public class PlanetariumUtils {
 	 * <b>mass</b> and <b>position</b> obtained in {@linkplain Console}
 	 * 
 	 * @see {@linkplain #readPosition()}, {@linkplain #readNewMass()}
-	 * @author Alessandra, remake by Simone
+	 * @author Alessandra, remake by  Simone
 	 */
 
 	public static Moon readMoon() {
