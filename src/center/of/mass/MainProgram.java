@@ -25,6 +25,7 @@ public class MainProgram {
 		Planet p = PlanetariumUtils.readPlanet();
 		System.out.println(p);
 		*/
+		
 
 		Manager manager = new Manager("Welcome in the Planetarium app!");
 

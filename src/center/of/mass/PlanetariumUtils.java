@@ -10,7 +10,7 @@ public class PlanetariumUtils {
 	private static final String MESSAGE_MASS = "Enter a valid mass: ";
 	private static final String MESSAGE_X_AXIS = "Enter the position on the x-axis: ";
 	private static final String MESSAGE_Y_AXIS = "Enter the position on the y-axis: ";
-	private static final double MINIMUM_MASS = 0.0000000001;
+	public static final double MINIMUM_MASS = 0.0000000001;
 
 	private static final String MESSAGE_REQUEST_NAME = "Enter the name of the celestial body: ";
 
