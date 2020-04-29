@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import exceptions.CelestialBodyNotFoundException;
+import exceptions.InvalidNameException;
 import exceptions.InvalidPositionException;
 import it.unibs.fp.mylib.MyMath;
 
@@ -76,10 +77,17 @@ public class StarSystem {
 	 * @author Gabriele
 	 * @param planet
 	 * @throws InvalidPositionException if the position of the planet is already occupied by another celestial body
+	 * @throws InvalidNameException if the name of the planet is already in use
 	 */
-	public void addPlanet(Planet planet) throws InvalidPositionException {
-		if(!isValidPosition(planet.getPosition())) {
-			throw new InvalidPositionException("The position of the planet is already occupied by another celestial body");
+	public void addPlanet(Planet planet) throws InvalidPositionException, InvalidNameException {
+		try {
+			checkValidity(planet);
+
+		} catch (InvalidPositionException exception) {
+			throw exception;
+
+		} catch (InvalidNameException exception) {
+			throw exception;
 		}
 
 		this.star.addPlanet(planet);
@@ -93,10 +101,17 @@ public class StarSystem {
 	 * @param idOfPlanet
 	 * @throws InvalidPositionException if the position of the moon is already occupied by another celestial body
 	 * @throws CelestialBodyNotFoundException if the planet with the specified id doesn't exist
+	 * @throws InvalidNameException if the name of the moon is already in use
 	 */
-	public void addMoonToPlanetWithId(Moon moon, String idOfPlanet) throws InvalidPositionException, CelestialBodyNotFoundException {
-		if(!isValidPosition(moon.getPosition())) {
-			throw new InvalidPositionException("The position of the moon is already occupied by another celestial body");
+	public void addMoonToPlanetWithId(Moon moon, String idOfPlanet) throws InvalidPositionException, CelestialBodyNotFoundException, InvalidNameException {
+		try {
+			checkValidity(moon);
+
+		} catch (InvalidPositionException exception) {
+			throw exception;
+
+		} catch (InvalidNameException exception) {
+			throw exception;
 		}
 
 		Planet planet = this.star.getPlanetById(idOfPlanet);
@@ -116,10 +131,17 @@ public class StarSystem {
 	 * @param nameOfPlanet
 	 * @throws InvalidPositionException if the position of the planet is already occupied by another celestial body
 	 * @throws CelestialBodyNotFoundException if the planet with the specified name doesn't exist
+	 * @throws InvalidNameException if the name of the planet is already in use
 	 */
-	public void addMoonToPlanetWithName(Moon moon, String nameOfPlanet) throws InvalidPositionException, CelestialBodyNotFoundException {
-		if(!isValidPosition(moon.getPosition())) {
-			throw new InvalidPositionException("The position of the moon is already occupied by another celestial body");
+	public void addMoonToPlanetWithName(Moon moon, String nameOfPlanet) throws InvalidPositionException, CelestialBodyNotFoundException, InvalidNameException {
+		try {
+			checkValidity(moon);
+
+		} catch (InvalidPositionException exception) {
+			throw exception;
+			
+		} catch (InvalidNameException exception) {
+			throw exception;
 		}
 
 		Planet planet = this.star.getPlanetByName(nameOfPlanet);
@@ -380,5 +402,32 @@ public class StarSystem {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Check if the specified {@code CelestialBody} can be added at {@code this StarSystem}
+	 * @author Gabriele
+	 * @throws InvalidPositionException if the position is already occupied
+	 * @throws InvalidNameException if the name is already in use
+	 */
+	private void checkValidity(CelestialBody celestialBodyToCheck) throws InvalidPositionException, InvalidNameException {
+		ArrayList<CelestialBody> celestialBodies = new ArrayList<CelestialBody>();
+
+		Position position = celestialBodyToCheck.getPosition();
+		String name = celestialBodyToCheck.getName();
+
+		celestialBodies.add(this.star);
+		celestialBodies.addAll(this.getPlanets());
+		celestialBodies.addAll(this.getMoons());
+
+		for(CelestialBody celestialBody : celestialBodies) {
+			if(position.equals(celestialBody.getPosition())) {
+				throw new InvalidPositionException("The specified position is already occupied by another celestial body");
+			}
+
+			if(name.equals(celestialBody.getName())) {
+				throw new InvalidNameException("The specified name is already in use");
+			}
+		}
 	}
 }

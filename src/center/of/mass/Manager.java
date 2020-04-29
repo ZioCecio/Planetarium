@@ -3,6 +3,7 @@ package center.of.mass;
 import java.util.ArrayList;
 
 import exceptions.CelestialBodyNotFoundException;
+import exceptions.InvalidNameException;
 import exceptions.InvalidPositionException;
 import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.MyMenu;
@@ -158,6 +159,8 @@ public class Manager {
                 this.writeOKMessage("Planet added succesfully!");
             } catch (InvalidPositionException exception) {
                 this.writeErrorMessage(exception.getMessage());
+            } catch (InvalidNameException exception) {
+                this.writeErrorMessage(exception.getMessage());
             }
         }
 
@@ -166,9 +169,14 @@ public class Manager {
                 String nameOfPlanet = InputDati.leggiStringaNonVuota("Name of the planet around which the moon orbits: ");
                 this.starSystem.addMoonToPlanetWithName((Moon) celestialBody, nameOfPlanet);
                 this.writeOKMessage("Moon added succesfully!");
+
             } catch (InvalidPositionException exception) {
                 this.writeErrorMessage(exception.getMessage());
+
             } catch (CelestialBodyNotFoundException exception) {
+                this.writeErrorMessage(exception.getMessage());
+                
+            } catch (InvalidNameException exception) {
                 this.writeErrorMessage(exception.getMessage());
             }
         }
