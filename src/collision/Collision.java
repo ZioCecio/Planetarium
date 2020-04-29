@@ -3,6 +3,7 @@ package collision;
 public class Collision {
 
 	
+	
 }
 /*Praticamente, avendo il raggio_di_rivoluzione, ordino i pianeti tramite quello(si cerca un algoritmo che fa questo lavoro)
  * dopodiche controllo tutte le lune di un primo pianeta(P1) e le ordino e faccio lo stesso con quelle di un secondo pianeta(p2).
