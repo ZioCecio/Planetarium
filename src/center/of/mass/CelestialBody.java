@@ -80,7 +80,7 @@ public class CelestialBody {
 	/**@return a {@linkplain String} indicating what type of {@linkplain CelestialBody} it is.<blockquote>
 	 * if it don't found any corrisponce ->{@code null}</blockquote>
 	 * @author Simone*/
-	public String whicCelestialBodyIs() {
+	public String whichCelestialBodyIs() {
 		String id = null;
 		if (this instanceof Planet) {
 			id = "P";
