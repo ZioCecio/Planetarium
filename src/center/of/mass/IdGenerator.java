@@ -16,9 +16,6 @@ public class IdGenerator {
 	 * <dl>
 	 * -date and time of discovery of the star
 	 * </dl>
-	 * <dl>
-	 * -a pseudorandom number generator.
-	 * </dl>
 	 * </p>
 	 * Being the latter unambiguous, it goes beyond the limit case in which two
 	 * stars respectively a removed and a created are in the same position. This
@@ -30,7 +27,6 @@ public class IdGenerator {
 	 * @author Alessandra, edited by Simone
 	 */
 	public static String create(CelestialBody celestial_body) {
-		return celestial_body.whicCelestialBodyIs() + celestial_body.getPosition().toString() + LocalDateTime.now()
-				+ UUID.randomUUID();
+		return celestial_body.whicCelestialBodyIs() + celestial_body.getPosition().toString() + LocalDateTime.now();
 	}
 }
