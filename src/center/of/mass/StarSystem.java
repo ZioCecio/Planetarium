@@ -1,6 +1,8 @@
 package center.of.mass;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import exceptions.CelestialBodyNotFoundException;
 import exceptions.InvalidPositionException;
@@ -130,6 +132,7 @@ public class StarSystem {
 
 	/**
 	 * Get all the {@code Planet} of the {@code StarSystem}
+	 * @author Gabriele
 	 * @return the planets
 	 */
 	public ArrayList<Planet> getPlanets() {
@@ -138,6 +141,7 @@ public class StarSystem {
 
 	/**
 	 * Get the {@code Planet} with the specified name
+	 * @author Gabriele
 	 * @param name
 	 * @return the planet
 	 */
@@ -147,6 +151,7 @@ public class StarSystem {
 
 	/**
 	 * Get the {@code Moon} whit the specified name
+	 * @author Gabriele
 	 * @param name
 	 * @return the moon
 	 */
@@ -164,6 +169,7 @@ public class StarSystem {
 
 	/**
 	 * Get all the {@code Moon} od the {@code StarSystem}
+	 * @author Gabriele
 	 * @return the moons
 	 */
 	public ArrayList<Moon> getMoons() {
@@ -178,6 +184,7 @@ public class StarSystem {
 
 	/**
 	 * Get all the {@code Moon} which orbits around a specified {@code Planet}
+	 * @author Gabriele
 	 * @param planetName the planet name
 	 * @return the moons
 	 */
@@ -187,6 +194,26 @@ public class StarSystem {
 		return planet == null 
 			? null
 			: planet.getMoons();
+	}
+
+	/**
+	 * Get the {@code CelestialBdoy} specified by the name
+	 * @author Gabriel
+	 * @param name
+	 * @return the celestial body
+	 */
+	public CelestialBody getCelestialBodyByName(String name) {
+		CelestialBody celestialBody = this.getPlanetByName(name);
+
+		if(celestialBody == null) {
+			celestialBody = this.getMoonByName(name);
+		}
+
+		if(this.star.getName().equals(name)) {
+			return this.star;
+		}
+
+		return celestialBody;
 	}
 
 	/**
@@ -227,6 +254,65 @@ public class StarSystem {
 		for(Planet planet : this.star.getPlanets()) {
 			planet.removeMoonByName(name);
 		}
+	}
+
+	/**
+	 * Get the route to reach a specified {@code CelestialBody} starting from another
+	 * specified {@code CelestialBody}
+	 * @author Gabriele
+	 * @param start
+	 * @param destination
+	 * @return an {@code ArrayList} of celestial bodies which represents the route
+	 */
+	public ArrayList<CelestialBody> getRoute(CelestialBody start, CelestialBody destination) {
+		if(start instanceof Star) {
+			return this.getRouteFromTheStar(destination);
+		}
+
+		if(start.equals(destination)) {
+			return new ArrayList<CelestialBody>(Arrays.asList(start));
+		}
+
+		if(start instanceof Moon && destination instanceof Moon) {
+			if(((Moon) start).getPlanet().equals(((Moon) destination).getPlanet())) {
+				return new ArrayList<CelestialBody>(Arrays.asList(start, ((Moon) start).getPlanet(), destination));
+			}
+		}
+
+		ArrayList<CelestialBody> startRoute = this.getRouteFromTheStar(start);
+		ArrayList<CelestialBody> destinationRoute = this.getRouteFromTheStar(destination);
+
+		destinationRoute.remove(0);
+		Collections.reverse(startRoute);
+		startRoute.addAll(destinationRoute);
+
+		return startRoute;
+	}
+
+	/**
+	 * Get the route to reach a specified {@code CelestialBody} starting from the star of {@code this StarSystem}
+	 * @author Gabriele
+	 * @param celestialBody
+	 * @return an {@code ArrayList} of celestial bodies which represents the route
+	 */
+	public ArrayList<CelestialBody> getRouteFromTheStar(CelestialBody celestialBody) {
+		ArrayList<CelestialBody> route = new ArrayList<CelestialBody>();
+
+		route.add(celestialBody);
+
+		if(celestialBody instanceof Star) {
+			return route;
+		}
+
+		if(celestialBody instanceof Moon) {
+			Moon moon = (Moon) celestialBody;
+			route.add(moon.getPlanet());
+		}
+
+		route.add(this.star);
+		Collections.reverse(route);
+
+		return route;
 	}
 
 	/**

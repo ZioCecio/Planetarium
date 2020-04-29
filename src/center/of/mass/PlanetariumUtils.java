@@ -22,7 +22,7 @@ public class PlanetariumUtils {
 	 * @author Alessandra, remake by Simone
 	 */
 	public static Planet readPlanet() {
-		return new Planet(InputDati.leggiStringa(MESSAGE_REQUEST_NAME), readNewMass(), readPosition());
+		return new Planet(InputDati.leggiStringaNonVuota(MESSAGE_REQUEST_NAME), readNewMass(), readPosition());
 	}
 
 	/**
@@ -34,11 +34,11 @@ public class PlanetariumUtils {
 	 */
 
 	public static Moon readMoon() {
-		return new Moon(InputDati.leggiStringa(MESSAGE_REQUEST_NAME), readNewMass(), readPosition());
+		return new Moon(InputDati.leggiStringaNonVuota(MESSAGE_REQUEST_NAME), readNewMass(), readPosition());
 	}
 
 	public static Star readStar() {
-		return new Star(InputDati.leggiStringa(MESSAGE_REQUEST_NAME), readNewMass(), readPosition());
+		return new Star(InputDati.leggiStringaNonVuota(MESSAGE_REQUEST_NAME), readNewMass(), readPosition());
 	}
 
 	/**
@@ -63,16 +63,5 @@ public class PlanetariumUtils {
 			mass = InputDati.leggiDoubleConMinimo(MESSAGE_MASS, MINIMUM_MASS);
 		} while (mass < MINIMUM_MASS);
 		return mass;
-	}
-
-	/**
-	 * Write to the cmd the names of the celestial bodies specified
-	 * @author Gabriele
-	 * @param celestialBodies
-	 */
-	public static void showCelestialBodiesNames(ArrayList<CelestialBody> celestialBodies) {
-		for(CelestialBody celestialBody : celestialBodies) {
-			System.out.println("-> " + celestialBody.getName());
-		}
 	}
 }

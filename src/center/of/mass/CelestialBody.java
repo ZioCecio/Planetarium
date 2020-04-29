@@ -75,7 +75,7 @@ public class CelestialBody {
 	 * @return {@code true} if {@code this} CelestialBody is equals as that passed as parameter
 	 */
 	public boolean equals(CelestialBody celestialBody) {
-		return this.name == celestialBody.name && this.mass == celestialBody.mass;
+		return this.name == celestialBody.name && this.mass == celestialBody.mass && this.id == celestialBody.id;
 	}
 	/**@return a {@linkplain String} indicating what type of {@linkplain CelestialBody} it is.<blockquote>
 	 * if it don't found any corrisponce ->{@code null}</blockquote>

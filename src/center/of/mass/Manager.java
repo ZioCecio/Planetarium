@@ -28,18 +28,31 @@ public class Manager {
     public Manager(String initialMessage) {
         this.initialMessage = initialMessage;
 
-        this.mainMenu = new MyMenu("Planetarium", new String[] {"Manage planets", "Manage moons"});
+        this.mainMenu = new MyMenu("Planetarium", new String[] {"Manage planets", "Manage moons", "See the route between 2 celestial bodies"});
         this.planetMenu = new MyMenu("What do you want to do?", new String[] {"Add a new planet", "Remove a planet", "View a list of all planets", "View the information about a specific planet"});
         this.moonMenu = new MyMenu("What do you want to do?", new String[] {"Add a new moon", "Remove a moon", "View a list of all moons", "View the information about a specific moon"});
     }
 
     /**
      * Start the program and the interation with the user
+     * @author Gabriele
      */
     public void startProgram() {
         this.writeOKMessage(this.initialMessage);
 
         this.starSystem = new StarSystem(PlanetariumUtils.readStar());
+
+        this.useMainMenu();
+    }
+
+    /**
+     * USATA SOLO PER DEBUG: DA ELIMINARE
+     * @param starSystem
+     */
+    public void startProgram(StarSystem starSystem) {
+        this.writeOKMessage(this.initialMessage);
+
+        this.starSystem = starSystem;
 
         this.useMainMenu();
     }
@@ -56,11 +69,15 @@ public class Manager {
 
             switch(choose) {
                 case 1:
-                    usePlanetMenu();
+                    this.usePlanetMenu();
                     break;
                 
                 case 2:
-                    useMoonMenu();
+                    this.useMoonMenu();
+                    break;
+
+                case 3:
+                    this.visualizeRoute(InputDati.leggiStringaNonVuota("Name of the starting celestial body: "), InputDati.leggiStringaNonVuota("Name of the destination celestial body: "));
                     break;
             }
 
@@ -69,6 +86,7 @@ public class Manager {
 
     /**
      * Start the menu used to manage the planets of the star system
+     * @author Gabriele
      */
     private void usePlanetMenu() {
         int choose;
@@ -82,15 +100,15 @@ public class Manager {
                     break;
 
                 case 2:
-                    this.removePlanetByName(InputDati.leggiStringa("Name of the planet to remove: "));
+                    this.removePlanetByName(InputDati.leggiStringaNonVuota("Name of the planet to remove: "));
                     break;
                 
                 case 3:
-                    PlanetariumUtils.showCelestialBodiesNames(new ArrayList<CelestialBody>(this.starSystem.getPlanets()));
+                    this.showCelestialBodiesNames(new ArrayList<CelestialBody>(this.starSystem.getPlanets()));
                     break;
 
                 case 4:
-                    this.viusalizeInfo(this.starSystem.getPlanetByName(InputDati.leggiStringa("Name of the planet to visualize: ")));
+                    this.viusalizeInfo(this.starSystem.getPlanetByName(InputDati.leggiStringaNonVuota("Name of the planet to visualize: ")));
                     break;
             }
 
@@ -99,6 +117,7 @@ public class Manager {
 
     /**
      * Start the menu used to manage the moons of the star system
+     * @author Gabriele
      */
     private void useMoonMenu() {
         int choose;
@@ -112,15 +131,16 @@ public class Manager {
                     break;
                 
                 case 2:
-                    this.removeMoonByName(InputDati.leggiStringa("Name of the moon to remove: "));
+                    this.removeMoonByName(InputDati.leggiStringaNonVuota("Name of the moon to remove: "));
                     break;
 
                 case 3:
-                    PlanetariumUtils.showCelestialBodiesNames(new ArrayList<CelestialBody>(this.starSystem.getMoons()));
+                    this.showCelestialBodiesNames(new ArrayList<CelestialBody>(this.starSystem.getMoons()));
                     break;
 
                 case 4:
-                    this.viusalizeInfo(this.starSystem.getMoonByName(InputDati.leggiStringa("Name of the moon to visualize: ")));
+                    this.viusalizeInfo(this.starSystem.getMoonByName(InputDati.leggiStringaNonVuota("Name of the moon to visualize: ")));
+                    break;
             }
 
         } while(choose != 0);
@@ -143,7 +163,7 @@ public class Manager {
 
         if(celestialBody instanceof Moon) {
             try {
-                String nameOfPlanet = InputDati.leggiStringa("Name of the planet around which the moon orbits: ");
+                String nameOfPlanet = InputDati.leggiStringaNonVuota("Name of the planet around which the moon orbits: ");
                 this.starSystem.addMoonToPlanetWithName((Moon) celestialBody, nameOfPlanet);
                 this.writeOKMessage("Moon added succesfully!");
             } catch (InvalidPositionException exception) {
@@ -189,6 +209,24 @@ public class Manager {
         }
     }
 
+    private void visualizeRoute(String start, String destination) {
+        CelestialBody startCelestialBody = this.starSystem.getCelestialBodyByName(start);
+        CelestialBody destinationCelestialBody = this.starSystem.getCelestialBodyByName(destination);
+
+        if(startCelestialBody == null) {
+            this.writeWarningMessage("The specified starting celestial body doesn't exist");
+            return;
+        }
+
+        if(destinationCelestialBody == null) {
+            this.writeWarningMessage("The specified destination celestial body doesn't exist");
+            return;
+        }
+
+        this.writeOKMessage(String.format("The route starting from %s to reach %s is: ", start, destination));
+        this.showCelestialBodiesNames(this.starSystem.getRoute(startCelestialBody, destinationCelestialBody));;
+    }
+
     /**
      * Write a RED message on the cmd
      * @author Gabriele
@@ -215,4 +253,15 @@ public class Manager {
     private void writeWarningMessage(String message) {
         System.out.println(YELLOW + message + RESET);
     }
+
+    /**
+	 * Write to the cmd the names of the celestial bodies specified
+	 * @author Gabriele
+	 * @param celestialBodies
+	 */
+    private void showCelestialBodiesNames(ArrayList<CelestialBody> celestialBodies) {
+		for(CelestialBody celestialBody : celestialBodies) {
+			this.writeOKMessage("-> " + celestialBody.getName());
+		}
+	}
 }
