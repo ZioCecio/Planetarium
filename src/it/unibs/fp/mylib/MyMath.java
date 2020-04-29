@@ -3,11 +3,9 @@ package it.unibs.fp.mylib;
 public class MyMath{
 	private static final int POWER_2 = 2;
 	private static final double MINIMUM = 0.00001;
-	//calcolare i logaritmi in base generica
 	public static double logBaseGenerica(double base,double x) {
 		return Math.log(x)/Math.log(base);
 	}
-	//calcolare log in base 2
 	public static double logBase2(double x) {
 		return logBaseGenerica(POWER_2,x);
 	}

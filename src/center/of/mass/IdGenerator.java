@@ -1,7 +1,6 @@
 package center.of.mass;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class IdGenerator {
 	/**
@@ -17,7 +16,6 @@ public class IdGenerator {
 	 * -date and time of discovery of the star
 	 * </dl>
 	 * <dl>
-	 * -a pseudorandom number generator.
 	 * </dl>
 	 * </p>
 	 * Being the latter unambiguous, it goes beyond the limit case in which two
@@ -25,12 +23,11 @@ public class IdGenerator {
 	 * allows you to keep past discoveries in the archive avoiding indistinguishable
 	 * duplications
 	 * 
-	 * @see {@linkplain Position}, {@linkplain LocalDateTime}, {@linkplain UUID}
+	 * @see {@linkplain Position}, {@linkplain LocalDateTime}
 	 * @param
 	 * @author Alessandra, edited by Simone
 	 */
 	public static String create(CelestialBody celestial_body) {
-		return celestial_body.whicCelestialBodyIs() + celestial_body.getPosition().toString() + LocalDateTime.now()
-				+ UUID.randomUUID();
+		return celestial_body.whicCelestialBodyIs() + celestial_body.getPosition().toString() + LocalDateTime.now();
 	}
 }

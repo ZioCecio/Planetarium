@@ -3,7 +3,9 @@ package center.of.mass;
 import java.util.ArrayList;
 
 import exceptions.CelestialBodyNotFoundException;
+import exceptions.InvalidMassException;
 import exceptions.InvalidPositionException;
+import it.unibs.fp.mylib.MyMath;
 
 public class StarSystem {
 	/**The {@linkplain StarSystem} CENTER {@value }*/
@@ -19,10 +21,22 @@ public class StarSystem {
 	 */
 	public StarSystem(Star star) {
 		this.star = star;
-
 		this.centerOfMass = this.calcCenterOfMass();
 	}
-
+	/**
+	 * @author Alessandra
+	 * @return the star
+	 */
+	public CelestialBody getStar() {
+		return this.star;
+	}
+	/***
+	 * 
+	 * @param centerOfMass
+	 */
+	public void setCenterOfMass(Position centerOfMass) {
+		this.centerOfMass = centerOfMass;
+	}
 	/***
 	 * <h1>Method to calculate the center of mass</h1> I attach the formula source
 	 * in two-dimensional case in "@See" section
@@ -51,12 +65,6 @@ public class StarSystem {
 		return new Position(partialX / totMass, partialY / totMass);
 	}
 
-	/*
-	 * 
-	 * suddivido la gestione del numeratore e del denominatore (metodo sottostante)
-	 * per brevita di scrittura e il calcolo della massa totale potrebbe
-	 * potenzialmente avere un riutilizzo
-	 */
 	public double totalMass(Star s, ArrayList<Planet> p) {
 		double totalMass = s.getMass();
 
@@ -73,10 +81,14 @@ public class StarSystem {
 	 * @author Gabriele
 	 * @param planet
 	 * @throws InvalidPositionException if the position of the planet is already occupied by another celestial body
+	 * @throws InvalidMassException if the mass of the planet is higher than the one of its star
 	 */
-	public void addPlanet(Planet planet) throws InvalidPositionException {
+	public void addPlanet(Planet planet) throws InvalidPositionException, InvalidMassException {
 		if(!isValidPosition(planet.getPosition())) {
 			throw new InvalidPositionException("The position of the planet is already occupied by another celestial body");
+		}
+		if(!isValidMassPlanet(planet)) {
+			throw new InvalidMassException("The mass of the planet must be lower than the one of its own star");
 		}
 
 		this.star.addPlanet(planet);
@@ -90,12 +102,15 @@ public class StarSystem {
 	 * @param idOfPlanet
 	 * @throws InvalidPositionException if the position of the moon is already occupied by another celestial body
 	 * @throws CelestialBodyNotFoundException if the planet with the specified id doesn't exist
+	 * @throws InvalidMassException if the mass of this moon is higher than its own planet
 	 */
-	public void addMoonToPlanetWithId(Moon moon, String idOfPlanet) throws InvalidPositionException, CelestialBodyNotFoundException {
+	public void addMoonToPlanetWithId(Moon moon, String idOfPlanet) throws InvalidPositionException, CelestialBodyNotFoundException, InvalidMassException {
 		if(!isValidPosition(moon.getPosition())) {
 			throw new InvalidPositionException("The position of the moon is already occupied by another celestial body");
 		}
-
+		if(!isValidMassMoon(moon)) {
+			throw new InvalidMassException("The mass of this moon must be lower than th ene of its own planet");
+		}
 		Planet planet = this.star.getPlanetById(idOfPlanet);
 
 		if(planet == null) {
@@ -105,6 +120,7 @@ public class StarSystem {
 		planet.addMoon(moon);
 	}
 	
+	
 	/**
 	 * Add a new {@linkplain Moon} in {@code this} SolarSystem which orbits around
 	 * the {@linkplain Planet}  specified by the name
@@ -113,12 +129,15 @@ public class StarSystem {
 	 * @param nameOfPlanet
 	 * @throws InvalidPositionException if the position of the planet is already occupied by another celestial body
 	 * @throws CelestialBodyNotFoundException if the planet with the specified name doesn't exist
+	 * @throws InvalidMassException if the mass of the moon is higher than the one of its own planet
 	 */
-	public void addMoonToPlanetWithName(Moon moon, String nameOfPlanet) throws InvalidPositionException, CelestialBodyNotFoundException {
+	public void addMoonToPlanetWithName(Moon moon, String nameOfPlanet) throws InvalidPositionException, CelestialBodyNotFoundException,InvalidMassException {
 		if(!isValidPosition(moon.getPosition())) {
 			throw new InvalidPositionException("The position of the moon is already occupied by another celestial body");
 		}
-
+		if(!isValidMassMoon(moon)) {
+			throw new InvalidMassException("The mass of this moon should be lower than the one of its own planet");
+		}
 		Planet planet = this.star.getPlanetByName(nameOfPlanet);
 
 		if(planet == null) {
@@ -163,7 +182,7 @@ public class StarSystem {
 	}
 
 	/**
-	 * Get all the {@code Moon} od the {@code StarSystem}
+	 * Get all the {@code Moon} of the {@code StarSystem}
 	 * @return the moons
 	 */
 	public ArrayList<Moon> getMoons() {
@@ -241,14 +260,10 @@ public class StarSystem {
 	 * Check if the specified position is already occupied by a {@code CelestialBody}
 	 * @author Gabriele
 	 * @param position
-	 * @return {@code tue} if the position is already occupied, {@code false} otherwise
+	 * @return {@code true} if the position is already occupied, {@code false} otherwise
 	 */
 	private boolean isValidPosition(Position position) {
-		ArrayList<CelestialBody> celestialBodies = new ArrayList<CelestialBody>();
-
-		celestialBodies.add(this.star);
-		celestialBodies.addAll(this.getPlanets());
-		celestialBodies.addAll(this.getMoons());
+		ArrayList<CelestialBody> celestialBodies = getCelestialBodies();
 
 		for(CelestialBody celestialBody : celestialBodies) {
 			if(position.equals(celestialBody.getPosition())) {
@@ -258,4 +273,41 @@ public class StarSystem {
 
 		return true;
 	}
+	/**
+	 * Counting the celestialbodies in this {@code StarSystem} 
+	 * using this method to calculate the center of mass 
+	 * @author Gabriele refactor Alessandra
+	 * @return
+	 */
+	public ArrayList<CelestialBody> getCelestialBodies() {
+		ArrayList<CelestialBody> celestialBodies = new ArrayList<CelestialBody>();
+
+		celestialBodies.add(this.star);
+		celestialBodies.addAll(this.getPlanets());
+		celestialBodies.addAll(this.getMoons());
+		return celestialBodies;
+	}
+	/**
+	 * checking the mass of a {@code Moon}, it must be lower than its own planet
+	 * @author Alessandra
+	 * @return a boolean false if it is higher ,true if it is not
+	 */
+	public boolean isValidMassMoon(Moon moon) {
+		if(moon.getMass()>moon.getPlanet().getMass()) {
+			return false;
+		}
+		return true;
+	}
+	/**
+	 * checking the mass of a {@code Planet}, it must be lower than its own star
+	 * @author Alessandra
+	 * @return a boolean false if it is higher ,true if it is not
+	 */
+	public boolean isValidMassPlanet(Planet planet) {
+		if(planet.getMass()>planet.getStar().getMass()) {
+			return false;
+		}
+		return true;
+	}
+	
 }

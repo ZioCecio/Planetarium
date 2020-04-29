@@ -3,6 +3,7 @@ package center.of.mass;
 import java.util.ArrayList;
 
 import exceptions.CelestialBodyNotFoundException;
+import exceptions.InvalidMassException;
 import exceptions.InvalidPositionException;
 import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.MyMenu;
@@ -34,7 +35,7 @@ public class Manager {
     }
 
     /**
-     * Start the program and the interation with the user
+     * Start the program and the interaction with the user
      */
     public void startProgram() {
         this.writeOKMessage(this.initialMessage);
@@ -82,7 +83,7 @@ public class Manager {
                     break;
 
                 case 2:
-                    this.removePlanetByName(InputDati.leggiStringa("Name of the planet to remove: "));
+                    this.removePlanetByName(InputDati.leggiStringaNonVuota("Name of the planet to remove: "));
                     break;
                 
                 case 3:
@@ -112,7 +113,7 @@ public class Manager {
                     break;
                 
                 case 2:
-                    this.removeMoonByName(InputDati.leggiStringa("Name of the moon to remove: "));
+                    this.removeMoonByName(InputDati.leggiStringaNonVuota("Name of the moon to remove: "));
                     break;
 
                 case 3:
@@ -131,25 +132,29 @@ public class Manager {
      * @author Gabriele
      * @param celestialBody
      */
-    private void addCelestialBody(CelestialBody celestialBody) {
+    private void addCelestialBody(CelestialBody celestialBody){
         if(celestialBody instanceof Planet) {
             try {
                 this.starSystem.addPlanet((Planet) celestialBody);
                 this.writeOKMessage("Planet added succesfully!");
             } catch (InvalidPositionException exception) {
                 this.writeErrorMessage(exception.getMessage());
+            }catch(InvalidMassException exception) {
+            	this.writeErrorMessage(exception.getMessage());
             }
         }
 
         if(celestialBody instanceof Moon) {
             try {
-                String nameOfPlanet = InputDati.leggiStringa("Name of the planet around which the moon orbits: ");
+                String nameOfPlanet = InputDati.leggiStringaNonVuota("Name of the planet around which the moon orbits: ");
                 this.starSystem.addMoonToPlanetWithName((Moon) celestialBody, nameOfPlanet);
                 this.writeOKMessage("Moon added succesfully!");
             } catch (InvalidPositionException exception) {
                 this.writeErrorMessage(exception.getMessage());
             } catch (CelestialBodyNotFoundException exception) {
                 this.writeErrorMessage(exception.getMessage());
+            }catch(InvalidMassException exception) {
+            	this.writeErrorMessage(exception.getMessage());
             }
         }
     }

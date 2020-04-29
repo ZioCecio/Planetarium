@@ -1,5 +1,7 @@
 package center.of.mass;
 
+import it.unibs.fp.mylib.MyMath;
+
 public class CelestialBody {
 	private String id;
 	private String name;
@@ -90,5 +92,18 @@ public class CelestialBody {
 			id = "S";
 		}
 		return id;
+	}
+	/**
+	 * to calculate the distance between two celestial body
+	 * @author Alessandra
+	 * @param celestialbody
+	 * @return the distance 
+	 */
+	public double distanceBetween(CelestialBody celestialbody) {
+		double d;
+		d=MyMath.distance(this.getPosition().getX(), celestialbody.getPosition().getX(), this.getPosition().getY(),
+				celestialbody.getPosition().getY());
+		return d;
+		
 	}
 }
