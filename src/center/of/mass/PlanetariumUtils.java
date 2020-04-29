@@ -1,6 +1,6 @@
 package center.of.mass;
 
-import java.io.Console;
+
 import java.util.ArrayList;
 
 import it.unibs.fp.mylib.*;
@@ -22,7 +22,7 @@ public class PlanetariumUtils {
 	 * @author Alessandra, remake by Simone
 	 */
 	public static Planet readPlanet() {
-		return new Planet(InputDati.leggiStringa(MESSAGE_REQUEST_NAME), InputDati.leggiDoubleConMinimo(MESSAGE_MASS, MINIMUM_MASS), readPosition());
+		return new Planet(InputDati.leggiStringa(MESSAGE_REQUEST_NAME), readNewMass(), readPosition());
 	}
 
 	/**
@@ -34,11 +34,11 @@ public class PlanetariumUtils {
 	 */
 
 	public static Moon readMoon() {
-		return new Moon(InputDati.leggiStringa(MESSAGE_REQUEST_NAME), InputDati.leggiDoubleConMinimo(MESSAGE_MASS, MINIMUM_MASS), readPosition());
+		return new Moon(InputDati.leggiStringa(MESSAGE_REQUEST_NAME), readNewMass(), readPosition());
 	}
 
 	public static Star readStar() {
-		return new Star(InputDati.leggiStringa(MESSAGE_REQUEST_NAME), InputDati.leggiDoubleConMinimo(MESSAGE_MASS, MINIMUM_MASS), readPosition());
+		return new Star(InputDati.leggiStringa(MESSAGE_REQUEST_NAME), readNewMass(), readPosition());
 	}
 
 	/**
