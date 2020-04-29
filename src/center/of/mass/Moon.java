@@ -76,13 +76,8 @@ public class Moon extends CelestialBody {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * @author Gabriele
-	 * @param the {@linkplain Planet} which {@code this} {@linkplain Moon} orbits
-=======
 	 * @param the
 	 *            {@linkplain Planet} which {@code this} {@linkplain Moon} orbits
->>>>>>> 0e2b6f73bc21a94b99ba1c5c7041193ccc8a86ad
 	 */
 	public void setPlanet(Planet planet) {
 		this.planet = planet;
