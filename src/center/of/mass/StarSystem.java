@@ -6,6 +6,7 @@ import java.util.Collections;
 
 import exceptions.CelestialBodyNotFoundException;
 import exceptions.InvalidPositionException;
+import it.unibs.fp.mylib.MyMath;
 
 public class StarSystem {
 	/**The {@linkplain StarSystem} CENTER {@value }*/
@@ -220,40 +221,60 @@ public class StarSystem {
 	 * Remove the {@code Planet} specified by the id from the {@code StarSystem}
 	 * @author Gabriele
 	 * @param id
+	 * @return the removed planet
 	 */
-	public void removePlanetById(String id) {
-		this.star.removePlanetById(id);
+	public Planet removePlanetById(String id) {
+		return this.star.removePlanetById(id);
 	}
 
 	/**
 	 * Remove the {@code Planet} specified by the name from the {@code StarSystem}
 	 * @author Gabriele
 	 * @param name
+	 * @return the removed planet
 	 */
-	public void removePlanetByName(String name) {
-		this.star.removePlanetByName(name);
+	public Planet removePlanetByName(String name) {
+		return this.star.removePlanetByName(name);
 	}
 
 	/**
 	 * Remove the {@code Moon} specified by the id from the {@code StarSystem}
 	 * @author Gabriele
 	 * @param id
+	 * @return the removed moon
 	 */
-	public void removeMoonById(String id) {
+	public Moon removeMoonById(String id) {
+		Moon moon = null;
+
 		for(Planet planet : this.star.getPlanets()) {
-			planet.removeMoonById(id);
+			moon = planet.removeMoonById(id);
+
+			if(moon != null) {
+				return moon;
+			}
 		}
+
+		return moon;
 	}
 
 	/**
 	 * Remove the {@code Moon} specified by the name from the {@code StarSystem}
 	 * @author Gabriele
 	 * @param name
+	 * @return the removed moon
 	 */
-	public void removeMoonByName(String name) {
+	public Moon removeMoonByName(String name) {
+		Moon moon = null;
+		
 		for(Planet planet : this.star.getPlanets()) {
-			planet.removeMoonByName(name);
+			moon = planet.removeMoonByName(name);
+
+			if(moon != null) {
+				return moon;
+			}
 		}
+
+		return moon;
 	}
 
 	/**
@@ -313,6 +334,22 @@ public class StarSystem {
 		Collections.reverse(route);
 
 		return route;
+	}
+
+	/**
+	 * Get the length of a route
+	 * @param route
+	 * @return the length of the route
+	 */
+	public double getRouteLength(ArrayList<CelestialBody> route) {
+		double length = 0;
+
+		for(int i = 0; i < route.size() - 1; i++) {
+			length += MyMath.distance(route.get(i).getPosition().getX(), route.get(i + 1).getPosition().getX(),
+						route.get(i).getPosition().getY(), route.get(i + 1).getPosition().getY());
+		}
+
+		return length;
 	}
 
 	/**

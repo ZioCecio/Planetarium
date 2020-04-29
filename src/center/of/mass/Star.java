@@ -104,11 +104,14 @@ public class Star extends CelestialBody {
 	 * Remove the {@code Planet} specified by the id
 	 * @author Gabriele
 	 * @param id
+	 * @return the removed planet
 	 */
-	public void removePlanetById(String id) {
+	public Planet removePlanetById(String id) {
 		Planet planet = this.getPlanetById(id);
 
 		this.planets.remove(planet);
+
+		return planet;
 	}
 
 	/**
@@ -116,22 +119,28 @@ public class Star extends CelestialBody {
 	 * If there are several planets with the same name, only the first will be removed
 	 * @author Gabriele
 	 * @param name
+	 * @return the removed planet
 	 */
-	public void removePlanetByName(String name) {
+	public Planet removePlanetByName(String name) {
 		Planet planet = this.getPlanetByName(name);
 
 		this.planets.remove(planet);
+
+		return planet;
 	}
 
 	/**
 	 * Remove the {@code Planet} specified by the position
 	 * @author Gabriele
 	 * @param position
+	 * @return the removed planet
 	 */
-	public void removePlanetByPosition(Position position) {
+	public Planet removePlanetByPosition(Position position) {
 		Planet planet = this.getPlanetByPosition(position);
 
 		this.planets.remove(planet);
+
+		return planet;
 	}
 
 	/**

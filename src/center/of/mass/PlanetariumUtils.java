@@ -1,8 +1,5 @@
 package center.of.mass;
 
-
-import java.util.ArrayList;
-
 import it.unibs.fp.mylib.*;
 
 /** Util static Class for input data */

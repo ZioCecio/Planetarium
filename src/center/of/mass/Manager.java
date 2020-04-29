@@ -180,9 +180,14 @@ public class Manager {
      * @param name
      */
     private void removePlanetByName(String name) {
-        this.starSystem.removePlanetByName(name);
+        Planet planet = this.starSystem.removePlanetByName(name);
 
-        this.writeWarningMessage("Planet removed succesfully!");
+        if(planet == null) {
+            this.writeWarningMessage("The specified planet doesn't exist");
+        }
+        else {
+            this.writeOKMessage("Planet removed succesfully!");
+        }
     }
 
     /**
@@ -191,9 +196,14 @@ public class Manager {
      * @param name
      */
     private void removeMoonByName(String name) {
-        this.starSystem.removeMoonByName(name);
+        Moon moon = this.starSystem.removeMoonByName(name);
 
-        this.writeWarningMessage("Moon removed succesfully!");
+        if(moon == null) {
+            this.writeWarningMessage("The specified moon doesn't exist");
+        }
+        else {
+            this.writeOKMessage("Moon removed succesfully!");
+        }
     }
 
     /**
@@ -223,8 +233,10 @@ public class Manager {
             return;
         }
 
+        ArrayList<CelestialBody> route = this.starSystem.getRoute(startCelestialBody, destinationCelestialBody);
         this.writeOKMessage(String.format("The route starting from %s to reach %s is: ", start, destination));
-        this.showCelestialBodiesNames(this.starSystem.getRoute(startCelestialBody, destinationCelestialBody));;
+        this.showCelestialBodiesNames(route);
+        this.writeOKMessage(String.format("The route is long %.2f", this.starSystem.getRouteLength(route)));
     }
 
     /**
