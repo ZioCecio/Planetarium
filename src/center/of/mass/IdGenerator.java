@@ -27,6 +27,6 @@ public class IdGenerator {
 	 * @author Alessandra, edited by Simone
 	 */
 	public static String create(CelestialBody celestial_body) {
-		return celestial_body.whicCelestialBodyIs() + celestial_body.getPosition().toString() + LocalDateTime.now();
+		return celestial_body.whichCelestialBodyIs() + celestial_body.getPosition().toString() + LocalDateTime.now();
 	}
 }
