@@ -5,12 +5,13 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import exceptions.CelestialBodyNotFoundException;
+import exceptions.InvalidMassException;
 import exceptions.InvalidNameException;
 import exceptions.InvalidPositionException;
 import it.unibs.fp.mylib.MyMath;
 
 public class StarSystem {
-	/**The {@linkplain StarSystem} CENTER {@value }*/
+	/** The {@linkplain StarSystem} CENTER {@value } */
 	public static final Position CENTER = new Position(0, 0);
 
 	private Star star;
@@ -18,135 +19,140 @@ public class StarSystem {
 
 	/**
 	 * Constructor of {@code StartSystem}
+	 * 
 	 * @author Gabriele
 	 * @param star
 	 */
 	public StarSystem(Star star) {
 		this.star = star;
-
-		this.centerOfMass = this.calcCenterOfMass();
+		this.centerOfMass = calculateCenter();
 	}
 
-	/***
-	 * <h1>Method to calculate the center of mass</h1> I attach the formula source
-	 * in two-dimensional case in "@See" section
-	 * @see<a href=" https://www.khanacademy.org/science/physics/linear-momentum/center-of-mass/a/what-is-center-of-mass">Center
-	 *        Of Mass </a>
+	/**
+	 * calculate the center of mass
 	 * 
-	 * @author Alessandra, edited by Simone
+	 * @Author Alessandra
+	 * @return {@code Position} of the center of mass
 	 */
-	public Position calcCenterOfMass() {
-		double partialX = this.star.getPosition().getX() * this.star.getMass();
-		double mass = 0;
-		double partialY = this.star.getPosition().getY() * this.star.getMass();
-		double totMass = 0;
-		ArrayList<Planet> p = this.star.getPlanets();
+	public Position calculateCenter() {
+		double x = 0;
+		double y = 0;
+		double totalMass = 0;
+		double partialX = 0;
+		double partialY = 0;
+		ArrayList<CelestialBody> celestialBodies = new ArrayList<CelestialBody>();
 
-		for (int i = 0; i < p.size(); i++) {
-			mass = p.get(i).getMass();
-			partialX += (p.get(i).getPosition().getX()) * mass;
-			partialX += p.get(i).partialXMoon();
-			partialY += (p.get(i).getPosition().getY()) * mass;
-			partialY += p.get(i).partialYMoon();
+		celestialBodies.add(this.star);
+		celestialBodies.addAll(this.getPlanets());
+		celestialBodies.addAll(this.getMoons());
+
+		for (CelestialBody celestialBody : celestialBodies) {
+			partialX += (celestialBody.getPosition().getX()) * (celestialBody.getMass());
+			partialY += (celestialBody.getPosition().getY()) * (celestialBody.getMass());
+			totalMass += celestialBody.getMass();
 		}
+		x = partialX / totalMass;
+		y = partialY / totalMass;
+		return new Position(x, y);
 
-		totMass = totalMass(this.star, p);
-
-		return new Position(partialX / totMass, partialY / totMass);
-	}
-
-	/*
-	 * 
-	 * suddivido la gestione del numeratore e del denominatore (metodo sottostante)
-	 * per brevita di scrittura e il calcolo della massa totale potrebbe
-	 * potenzialmente avere un riutilizzo
-	 */
-	public double totalMass(Star s, ArrayList<Planet> p) {
-		double totalMass = s.getMass();
-
-		for (int i = 0; i < p.size(); i++) {
-			totalMass += p.get(i).getMass();
-			totalMass += p.get(i).totalMassMoon();
-		}
-
-		return totalMass;
 	}
 
 	/**
 	 * Add a new {@code Planet} in {@code this} SolarSystem
+	 * 
 	 * @author Gabriele
 	 * @param planet
-	 * @throws InvalidPositionException if the position of the planet is already occupied by another celestial body
-	 * @throws InvalidNameException if the name of the planet is already in use
+	 * @throws InvalidPositionException if the position of the planet is already
+	 *                                  occupied by another celestial body
+	 * @throws InvalidNameException     if the name of the planet is already in use
+	 * 
 	 */
-	public void addPlanet(Planet planet) throws InvalidPositionException, InvalidNameException {
+	public void addPlanet(Planet planet) throws InvalidPositionException, InvalidNameException, InvalidMassException {
 		try {
 			checkValidity(planet);
 
 		} catch (InvalidPositionException exception) {
 			throw exception;
-
 		} catch (InvalidNameException exception) {
+			throw exception;
+		} catch (InvalidMassException exception) {
 			throw exception;
 		}
 
 		this.star.addPlanet(planet);
+
 	}
 
 	/**
 	 * Add a new {@linkplain Moon} in {@code this} SolarSystem which orbits around
 	 * the {@linkplain Planet} specified by the id
+	 * 
 	 * @author Gabriele
-	 * @param moon 
+	 * @param moon
 	 * @param idOfPlanet
-	 * @throws InvalidPositionException if the position of the moon is already occupied by another celestial body
-	 * @throws CelestialBodyNotFoundException if the planet with the specified id doesn't exist
-	 * @throws InvalidNameException if the name of the moon is already in use
+	 * @throws InvalidPositionException       if the position of the moon is already
+	 *                                        occupied by another celestial body
+	 * @throws CelestialBodyNotFoundException if the planet with the specified id
+	 *                                        doesn't exist
+	 * @throws InvalidNameException           if the name of the moon is already in
+	 *                                        use
+	 * @throws IvalidMassException            if the mass of the planet is higher
+	 *                                        than the one of the star
 	 */
-	public void addMoonToPlanetWithId(Moon moon, String idOfPlanet) throws InvalidPositionException, CelestialBodyNotFoundException, InvalidNameException {
+	public void addMoonToPlanetWithId(Moon moon, String idOfPlanet) throws InvalidPositionException,
+			CelestialBodyNotFoundException, InvalidNameException, InvalidMassException {
 		try {
 			checkValidity(moon);
 
 		} catch (InvalidPositionException exception) {
 			throw exception;
-
 		} catch (InvalidNameException exception) {
+			throw exception;
+		} catch (InvalidMassException exception) {
 			throw exception;
 		}
 
 		Planet planet = this.star.getPlanetById(idOfPlanet);
 
-		if(planet == null) {
+		if (planet == null) {
 			throw new CelestialBodyNotFoundException("The planet with the spiecified id doesn't exist");
 		}
 
 		planet.addMoon(moon);
 	}
-	
+
 	/**
 	 * Add a new {@linkplain Moon} in {@code this} SolarSystem which orbits around
-	 * the {@linkplain Planet}  specified by the name
+	 * the {@linkplain Planet} specified by the name
+	 * 
 	 * @author Gabriele
-	 * @param moon 
+	 * @param moon
 	 * @param nameOfPlanet
-	 * @throws InvalidPositionException if the position of the planet is already occupied by another celestial body
-	 * @throws CelestialBodyNotFoundException if the planet with the specified name doesn't exist
-	 * @throws InvalidNameException if the name of the planet is already in use
+	 * @throws InvalidPositionException       if the position of the planet is
+	 *                                        already occupied by another celestial
+	 *                                        body
+	 * @throws CelestialBodyNotFoundException if the planet with the specified name
+	 *                                        doesn't exist
+	 * @throws InvalidNameException           if the name of the planet is already
+	 *                                        in use
+	 * @throws InvalidMassException           if the mass of the moon is higher than
+	 *                                        the one of its planet
 	 */
-	public void addMoonToPlanetWithName(Moon moon, String nameOfPlanet) throws InvalidPositionException, CelestialBodyNotFoundException, InvalidNameException {
+	public void addMoonToPlanetWithName(Moon moon, String nameOfPlanet) throws InvalidPositionException,
+			CelestialBodyNotFoundException, InvalidNameException, InvalidMassException {
 		try {
 			checkValidity(moon);
 
 		} catch (InvalidPositionException exception) {
 			throw exception;
-			
+
 		} catch (InvalidNameException exception) {
 			throw exception;
 		}
 
 		Planet planet = this.star.getPlanetByName(nameOfPlanet);
 
-		if(planet == null) {
+		if (planet == null) {
 			throw new CelestialBodyNotFoundException("The planet with the spiecified name doesn't exist");
 		}
 
@@ -155,6 +161,7 @@ public class StarSystem {
 
 	/**
 	 * Get all the {@code Planet} of the {@code StarSystem}
+	 * 
 	 * @author Gabriele
 	 * @return the planets
 	 */
@@ -164,6 +171,7 @@ public class StarSystem {
 
 	/**
 	 * Get the {@code Planet} with the specified name
+	 * 
 	 * @author Gabriele
 	 * @param name
 	 * @return the planet
@@ -174,6 +182,7 @@ public class StarSystem {
 
 	/**
 	 * Get the {@code Moon} whit the specified name
+	 * 
 	 * @author Gabriele
 	 * @param name
 	 * @return the moon
@@ -181,8 +190,8 @@ public class StarSystem {
 	public Moon getMoonByName(String name) {
 		ArrayList<Moon> moons = this.getMoons();
 
-		for(Moon moon : moons) {
-			if(name.equals(moon.getName())) {
+		for (Moon moon : moons) {
+			if (name.equals(moon.getName())) {
 				return moon;
 			}
 		}
@@ -192,13 +201,14 @@ public class StarSystem {
 
 	/**
 	 * Get all the {@code Moon} od the {@code StarSystem}
+	 * 
 	 * @author Gabriele
 	 * @return the moons
 	 */
 	public ArrayList<Moon> getMoons() {
 		ArrayList<Moon> moons = new ArrayList<Moon>();
 
-		for(Planet planet : this.star.getPlanets()) {
+		for (Planet planet : this.star.getPlanets()) {
 			moons.addAll(planet.getMoons());
 		}
 
@@ -207,6 +217,7 @@ public class StarSystem {
 
 	/**
 	 * Get all the {@code Moon} which orbits around a specified {@code Planet}
+	 * 
 	 * @author Gabriele
 	 * @param planetName the planet name
 	 * @return the moons
@@ -214,13 +225,12 @@ public class StarSystem {
 	public ArrayList<Moon> getMoons(String planetName) {
 		Planet planet = this.star.getPlanetByName(planetName);
 
-		return planet == null 
-			? null
-			: planet.getMoons();
+		return planet == null ? null : planet.getMoons();
 	}
 
 	/**
-	 * Get the {@code CelestialBdoy} specified by the name
+	 * Get the {@code CelestialBody} specified by the name
+	 * 
 	 * @author Gabriel
 	 * @param name
 	 * @return the celestial body
@@ -228,11 +238,11 @@ public class StarSystem {
 	public CelestialBody getCelestialBodyByName(String name) {
 		CelestialBody celestialBody = this.getPlanetByName(name);
 
-		if(celestialBody == null) {
+		if (celestialBody == null) {
 			celestialBody = this.getMoonByName(name);
 		}
 
-		if(this.star.getName().equals(name)) {
+		if (this.star.getName().equals(name)) {
 			return this.star;
 		}
 
@@ -241,6 +251,7 @@ public class StarSystem {
 
 	/**
 	 * Remove the {@code Planet} specified by the id from the {@code StarSystem}
+	 * 
 	 * @author Gabriele
 	 * @param id
 	 * @return the removed planet
@@ -251,6 +262,7 @@ public class StarSystem {
 
 	/**
 	 * Remove the {@code Planet} specified by the name from the {@code StarSystem}
+	 * 
 	 * @author Gabriele
 	 * @param name
 	 * @return the removed planet
@@ -261,6 +273,7 @@ public class StarSystem {
 
 	/**
 	 * Remove the {@code Moon} specified by the id from the {@code StarSystem}
+	 * 
 	 * @author Gabriele
 	 * @param id
 	 * @return the removed moon
@@ -268,10 +281,10 @@ public class StarSystem {
 	public Moon removeMoonById(String id) {
 		Moon moon = null;
 
-		for(Planet planet : this.star.getPlanets()) {
+		for (Planet planet : this.star.getPlanets()) {
 			moon = planet.removeMoonById(id);
 
-			if(moon != null) {
+			if (moon != null) {
 				return moon;
 			}
 		}
@@ -281,17 +294,18 @@ public class StarSystem {
 
 	/**
 	 * Remove the {@code Moon} specified by the name from the {@code StarSystem}
+	 * 
 	 * @author Gabriele
 	 * @param name
 	 * @return the removed moon
 	 */
 	public Moon removeMoonByName(String name) {
 		Moon moon = null;
-		
-		for(Planet planet : this.star.getPlanets()) {
+
+		for (Planet planet : this.star.getPlanets()) {
 			moon = planet.removeMoonByName(name);
 
-			if(moon != null) {
+			if (moon != null) {
 				return moon;
 			}
 		}
@@ -300,24 +314,25 @@ public class StarSystem {
 	}
 
 	/**
-	 * Get the route to reach a specified {@code CelestialBody} starting from another
-	 * specified {@code CelestialBody}
+	 * Get the route to reach a specified {@code CelestialBody} starting from
+	 * another specified {@code CelestialBody}
+	 * 
 	 * @author Gabriele
 	 * @param start
 	 * @param destination
 	 * @return an {@code ArrayList} of celestial bodies which represents the route
 	 */
 	public ArrayList<CelestialBody> getRoute(CelestialBody start, CelestialBody destination) {
-		if(start instanceof Star) {
+		if (start instanceof Star) {
 			return this.getRouteFromTheStar(destination);
 		}
 
-		if(start.equals(destination)) {
+		if (start.equals(destination)) {
 			return new ArrayList<CelestialBody>(Arrays.asList(start));
 		}
 
-		if(start instanceof Moon && destination instanceof Moon) {
-			if(((Moon) start).getPlanet().equals(((Moon) destination).getPlanet())) {
+		if (start instanceof Moon && destination instanceof Moon) {
+			if (((Moon) start).getPlanet().equals(((Moon) destination).getPlanet())) {
 				return new ArrayList<CelestialBody>(Arrays.asList(start, ((Moon) start).getPlanet(), destination));
 			}
 		}
@@ -333,7 +348,9 @@ public class StarSystem {
 	}
 
 	/**
-	 * Get the route to reach a specified {@code CelestialBody} starting from the star of {@code this StarSystem}
+	 * Get the route to reach a specified {@code CelestialBody} starting from the
+	 * star of {@code this StarSystem}
+	 * 
 	 * @author Gabriele
 	 * @param celestialBody
 	 * @return an {@code ArrayList} of celestial bodies which represents the route
@@ -343,11 +360,11 @@ public class StarSystem {
 
 		route.add(celestialBody);
 
-		if(celestialBody instanceof Star) {
+		if (celestialBody instanceof Star) {
 			return route;
 		}
 
-		if(celestialBody instanceof Moon) {
+		if (celestialBody instanceof Moon) {
 			Moon moon = (Moon) celestialBody;
 			route.add(moon.getPlanet());
 		}
@@ -360,22 +377,23 @@ public class StarSystem {
 
 	/**
 	 * Get the length of a route
+	 * 
 	 * @param route
 	 * @return the length of the route
 	 */
 	public double getRouteLength(ArrayList<CelestialBody> route) {
 		double length = 0;
 
-		for(int i = 0; i < route.size() - 1; i++) {
+		for (int i = 0; i < route.size() - 1; i++) {
 			length += MyMath.distance(route.get(i).getPosition().getX(), route.get(i + 1).getPosition().getX(),
-						route.get(i).getPosition().getY(), route.get(i + 1).getPosition().getY());
+					route.get(i).getPosition().getY(), route.get(i + 1).getPosition().getY());
 		}
 
 		return length;
 	}
 
 	/**
-	 * @author Gabriele
+	 * @author Alessandra
 	 * @return the centerOfMass
 	 */
 	public Position getCenterOfMass() {
@@ -383,10 +401,13 @@ public class StarSystem {
 	}
 
 	/**
-	 * Check if the specified position is already occupied by a {@code CelestialBody}
+	 * Check if the specified position is already occupied by a
+	 * {@code CelestialBody}
+	 * 
 	 * @author Gabriele
 	 * @param position
-	 * @return {@code tue} if the position is already occupied, {@code false} otherwise
+	 * @return {@code tue} if the position is already occupied, {@code false}
+	 *         otherwise
 	 */
 	private boolean isValidPosition(Position position) {
 		ArrayList<CelestialBody> celestialBodies = new ArrayList<CelestialBody>();
@@ -394,9 +415,8 @@ public class StarSystem {
 		celestialBodies.add(this.star);
 		celestialBodies.addAll(this.getPlanets());
 		celestialBodies.addAll(this.getMoons());
-
-		for(CelestialBody celestialBody : celestialBodies) {
-			if(position.equals(celestialBody.getPosition())) {
+		for (CelestialBody celestialBody : celestialBodies) {
+			if (position.equals(celestialBody.getPosition())) {
 				return false;
 			}
 		}
@@ -405,12 +425,16 @@ public class StarSystem {
 	}
 
 	/**
-	 * Check if the specified {@code CelestialBody} can be added at {@code this StarSystem}
+	 * Check if the specified {@code CelestialBody} can be added at
+	 * {@code this StarSystem}
+	 * 
 	 * @author Gabriele
 	 * @throws InvalidPositionException if the position is already occupied
-	 * @throws InvalidNameException if the name is already in use
+	 * @throws InvalidNameException     if the name is already in use
+	 * @throws InvalidMassException     if the mass is too high
 	 */
-	private void checkValidity(CelestialBody celestialBodyToCheck) throws InvalidPositionException, InvalidNameException {
+	private void checkValidity(CelestialBody celestialBodyToCheck)
+			throws InvalidPositionException, InvalidNameException, InvalidMassException {
 		ArrayList<CelestialBody> celestialBodies = new ArrayList<CelestialBody>();
 
 		Position position = celestialBodyToCheck.getPosition();
@@ -420,14 +444,41 @@ public class StarSystem {
 		celestialBodies.addAll(this.getPlanets());
 		celestialBodies.addAll(this.getMoons());
 
-		for(CelestialBody celestialBody : celestialBodies) {
-			if(position.equals(celestialBody.getPosition())) {
-				throw new InvalidPositionException("The specified position is already occupied by another celestial body");
+		for (CelestialBody celestialBody : celestialBodies) {
+			if (position.equals(celestialBody.getPosition())) {
+				throw new InvalidPositionException(
+						"The specified position is already occupied by another celestial body");
 			}
-
-			if(name.equals(celestialBody.getName())) {
+			if (name.equals(celestialBody.getName())) {
 				throw new InvalidNameException("The specified name is already in use");
 			}
+			if (this.isValidMass(celestialBody)) {
+				throw new InvalidMassException("The mass is too high");
+			}
 		}
+	}
+
+	/**
+	 * the mass of a moon must be lower than the one of its own planet the mass of a
+	 * planet must be lower than the one of its own star
+	 * 
+	 * @author Alessandra
+	 * @param celestialBody
+	 * @return
+	 */
+	public boolean isValidMass(CelestialBody celestialBody) {
+		if (celestialBody instanceof Planet) {
+			if (celestialBody.getMass() > this.star.getMass()) {
+				return true;
+			}
+			return false;
+		}
+		if (celestialBody instanceof Moon) {
+			if (celestialBody.getMass() > ((Moon) celestialBody).getPlanet().getMass()) {
+				return true;
+			}
+			return false;
+		}
+		return false;
 	}
 }

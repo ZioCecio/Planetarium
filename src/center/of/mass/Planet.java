@@ -51,48 +51,6 @@ public class Planet extends CelestialBody {
 		this.radius = calcRadius();
 	}
 
-	public double partialXMoon() {
-		double partialXMoon = 0;
-		double mass = 0;
-		try {
-			for (int i = 0; i < moons.size(); i++) {
-				mass = moons.get(i).getMass();
-				partialXMoon += mass * (moons.get(i).getPosition().getX());
-			}
-		} catch (Exception NullPointerException) {
-			partialXMoon = 0;
-		}
-		return partialXMoon;
-	}
-
-	public double partialYMoon() {
-		double partialYMoon = 0;
-		double mass = 0;
-		try {
-			for (int i = 0; i < moons.size(); i++) {
-				mass = moons.get(i).getMass();
-				partialYMoon += mass * (moons.get(i).getPosition().getY());
-			}
-		} catch (Exception NullPointerException) {
-			partialYMoon = 0;
-		}
-		return partialYMoon;
-	}
-
-	public double totalMassMoon() {
-
-		double totalMass = 0;
-		try {
-			for (int i = 0; i < moons.size(); i++) {
-				totalMass += moons.get(i).getMass();
-			}
-
-		} catch (Exception NullPointerException) {
-			totalMass = 0;
-		}
-		return totalMass;
-	}
-
 	/**
 	 * Add a new {@code Moon} that orbits around {@code this} planet
 	 * @author Gabriele
