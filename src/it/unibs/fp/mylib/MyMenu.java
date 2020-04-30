@@ -10,7 +10,7 @@ public class MyMenu
 {
 
   final private static String VOCE_USCITA = "0\tExit";
-  final private static String RICHIESTA_INSERIMENTO = "Enter the number of the desired option: ";
+  final private static String RICHIESTA_INSERIMENTO = "Enter the number of the required option: ";
 
 
   private  String titolo;
