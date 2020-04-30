@@ -1,5 +1,7 @@
 package center.of.mass;
 
+import collision.Collision;
+
 public class MainProgram {
 
 	public static void main(String[] args) {
@@ -25,6 +27,7 @@ public class MainProgram {
 		Manager manager = new Manager("Welcome in the Planetarium app!");
 
 		manager.startProgram(starSystem);
+
 	}
 
 }

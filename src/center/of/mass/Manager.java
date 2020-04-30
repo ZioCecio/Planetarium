@@ -320,7 +320,7 @@ public class Manager {
 	 */
 	private void showCelestialBodiesNames(ArrayList<CelestialBody> celestialBodies) {
 		for (CelestialBody celestialBody : celestialBodies) {
-			this.writeOKMessage("-> " + celestialBody.getName());
+			this.writeOKMessage("->  " + celestialBody.getName());
 		}
 	}
 }

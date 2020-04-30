@@ -3,6 +3,9 @@ package center.of.mass;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import javax.annotation.Resources;
+import javax.xml.ws.RespectBinding;
+
 public class IdGenerator {
 	/**
 	 * <b>to generate ID</b> I use the most significant information
@@ -25,6 +28,7 @@ public class IdGenerator {
 	 * @see {@linkplain Position}, {@linkplain LocalDateTime}, {@linkplain UUID}
 	 * @param
 	 * @author Alessandra, edited by Simone
+	 *
 	 */
 	public static String create(CelestialBody celestial_body) {
 		return celestial_body.whichCelestialBodyIs() + celestial_body.getPosition().toString() + LocalDateTime.now();
