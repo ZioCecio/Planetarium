@@ -2,6 +2,7 @@ package center.of.mass;
 
 import java.util.ArrayList;
 
+import collision.Collision;
 import exceptions.CelestialBodyNotFoundException;
 import exceptions.InvalidMassException;
 import exceptions.InvalidNameException;
@@ -32,7 +33,7 @@ public class Manager {
 		this.initialMessage = initialMessage;
 
 		this.mainMenu = new MyMenu("Planetarium", new String[] { "Manage planets", "Manage moons",
-				"See the route between 2 celestial bodies", "Show the center of mass of the current star system" });
+				"See the route between 2 celestial bodies", "Show the center of mass of the current star system", "Check if two celestial bodies can collide" });
 		this.planetMenu = new MyMenu("What do you want to do?", new String[] { "Add a new planet", "Remove a planet",
 				"View a list of all planets", "View the information about a specific planet" });
 		this.moonMenu = new MyMenu("What do you want to do?", new String[] { "Add a new moon", "Remove a moon",
@@ -91,6 +92,11 @@ public class Manager {
 				break;
 			case 4:
 				this.visualizeCenter();
+				break;
+
+			case 5:
+				this.checkCollision(InputDati.leggiStringaNonVuota("Name of the first celestial body: "), InputDati.leggiStringaNonVuota("Name of the second celestial body: "));
+				break;
 			}
 
 		} while (choose != 0);
@@ -280,6 +286,23 @@ public class Manager {
 		} else {
 			this.writeOKMessage("The center of mass is " + this.starSystem.getCenterOfMass().toString());
 		}
+	}
+
+	private void checkCollision(String celestialBodyName1, String celestialBodyName2) {
+		CelestialBody celestialBody1 = this.starSystem.getCelestialBodyByName(celestialBodyName1);
+		CelestialBody celestialBody2 = this.starSystem.getCelestialBodyByName(celestialBodyName2);
+
+		if (celestialBody1 == null) {
+			this.writeWarningMessage("The specified first celestial body doesn't exist");
+			return;
+		}
+
+		if (celestialBody2 == null) {
+			this.writeWarningMessage("The specified second celestial body doesn't exist");
+			return;
+		}
+
+		this.writeWarningMessage(Collision.collisionMenu(celestialBody1, celestialBody2));
 	}
 
 	/**
