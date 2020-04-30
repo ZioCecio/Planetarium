@@ -135,7 +135,23 @@ public class Collision {
 		return ((offset <= m.getRadius()));
 	}
 
-	/** @author Simone */
+	/**
+	 * Two {@linkplain Moon} can Collide only if:
+	 * <p>
+	 * <dl>
+	 * - orbit around the same {@linkplain Planet} and have the same
+	 * <b><code>radius</code></b>
+	 * </dl>
+	 * <dl>
+	 * - the <b>distance </b>from the {@linkplain Star} of the
+	 * <code><b>first</b></code> {@linkplain Moon}'s {@linkplain Planet} plus its {@code radius} is
+	 * greater than the <b>distance </b> of the <b>{@code second}</b> {@linkplain Moon}'s {@linkplain Planet} minus its {@code radius}
+	 * </dl>
+	 * <br> Example {@code ((m1.getRadius() + m1.getPlanet().getRadius() }<b>> </b>{@code m2.getPlanet().getRadius() - m2.getRadius()) }
+	 * @param m1, the first {@linkplain Moon}
+	 * @param m2, the second {@linkplain Moon}
+	 * @author Simone
+	 */
 	private static boolean MoonMoonCollision(Moon m1, Moon m2) {
 		if (m1.equals(m2))
 			return false;
@@ -145,8 +161,8 @@ public class Collision {
 			else
 				return false;
 		if (m1.getPlanet().getRadius() < m2.getPlanet().getRadius())
-			return ((m2.getPlanet().getRadius() - m2.getRadius()) < (m1.getRadius() + m1.getPlanet().getRadius()));
-		return ((m1.getPlanet().getRadius() - m1.getRadius()) < (m2.getRadius() + m2.getPlanet().getRadius()));
+			return ((m2.getPlanet().getRadius() - m2.getRadius()) <= (m1.getRadius() + m1.getPlanet().getRadius()));
+		return ((m1.getPlanet().getRadius() - m1.getRadius()) <= (m2.getRadius() + m2.getPlanet().getRadius()));
 
 	}
 }
