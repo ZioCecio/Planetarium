@@ -242,6 +242,12 @@ public class Manager {
 		}
 	}
 
+	/**
+	 * Visualize the route to reach the specified destination from the specified start
+	 * @author Gabriele
+	 * @param start
+	 * @param destination
+	 */
 	private void visualizeRoute(String start, String destination) {
 		CelestialBody startCelestialBody = this.starSystem.getCelestialBodyByName(start);
 		CelestialBody destinationCelestialBody = this.starSystem.getCelestialBodyByName(destination);

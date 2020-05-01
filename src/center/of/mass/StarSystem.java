@@ -84,7 +84,6 @@ public class StarSystem {
 		}
 
 		this.star.addPlanet(planet);
-
 	}
 
 	/**
@@ -407,7 +406,8 @@ public class StarSystem {
 	 * @return the centerOfMass
 	 */
 	public Position getCenterOfMass() {
-		return centerOfMass;
+		this.centerOfMass = this.calculateCenter();
+		return this.centerOfMass;
 	}
 
 	/**
