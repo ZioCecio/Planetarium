@@ -403,30 +403,6 @@ public class StarSystem {
 	}
 
 	/**
-	 * Check if the specified position is already occupied by a
-	 * {@code CelestialBody}
-	 * 
-	 * @author Gabriele
-	 * @param position
-	 * @return {@code tue} if the position is already occupied, {@code false}
-	 *         otherwise
-	 */
-	private boolean isValidPosition(Position position) {
-		ArrayList<CelestialBody> celestialBodies = new ArrayList<CelestialBody>();
-
-		celestialBodies.add(this.star);
-		celestialBodies.addAll(this.getPlanets());
-		celestialBodies.addAll(this.getMoons());
-		for (CelestialBody celestialBody : celestialBodies) {
-			if (position.equals(celestialBody.getPosition())) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
 	 * Check if the specified {@code CelestialBody} can be added at
 	 * {@code this StarSystem}
 	 * 

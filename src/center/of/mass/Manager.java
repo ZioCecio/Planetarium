@@ -54,19 +54,6 @@ public class Manager {
 	}
 
 	/**
-	 * USATA SOLO PER DEBUG: DA ELIMINARE
-	 * 
-	 * @param starSystem
-	 */
-	public void startProgram(StarSystem starSystem) {
-		this.writeOKMessage(this.initialMessage);
-
-		this.starSystem = starSystem;
-
-		this.useMainMenu();
-	}
-
-	/**
 	 * Start the main menu
 	 * 
 	 * @author Gabriele
