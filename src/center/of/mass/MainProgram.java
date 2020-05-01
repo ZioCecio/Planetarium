@@ -24,10 +24,11 @@ public class MainProgram {
 
 		StarSystem starSystem = new StarSystem(sole);
 
-		Manager manager = new Manager("Welcome in the Planetarium app!");
+//		Manager manager = new Manager("Welcome in the Planetarium app!");
+//
+//		manager.startProgram(starSystem);
 
-		manager.startProgram(starSystem);
-
+		System.out.println(Collision.collisionMenu(pianeta1, luna1));
 	}
 
 }

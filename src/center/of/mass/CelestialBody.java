@@ -1,4 +1,4 @@
-package center.of.mass;
+ package center.of.mass;
 
 import java.lang.annotation.Target;
 
@@ -82,7 +82,7 @@ public class CelestialBody {
 	 */
 	public boolean equals(CelestialBody celestialBody) {
 		
-		return (this.id.compareTo(celestialBody.getId())==0 &&this.name.compareTo(celestialBody.getId())==0 && this.mass == celestialBody.getMass());
+		return (this.id.compareTo(celestialBody.getId())==0  &&this.name.compareTo(celestialBody.getName())==0&& this.mass == celestialBody.getMass());
 	}
 	/**@return a {@linkplain String} indicating what type of {@linkplain CelestialBody} it is.<blockquote>
 	 * if it don't found any correspondence ->{@code null}</blockquote>
