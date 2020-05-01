@@ -20,6 +20,20 @@ public class Collision {
 	private static final String NOT_CELESTIALBODY_DAUGHTER = "You must use a daughter class of "
 			+ CelestialBody.class.getSimpleName() + " example:\n -Star;\n -Planet;\n -Moon.";
 
+	/**
+	 * This is the main method
+	 * 
+	 * @param c1, the first {@linkplain CelestialBody}, <b>it must be his own
+	 *            daughter class</b>
+	 * @param c2, the second {@linkplain CelestialBody}, <b>it must be his own
+	 *            daughter class</b>
+	 *            
+	 * @return a {@linkplain String}, which says whether
+	 *         {@linkplain #IT_COULD_BE_A_COLLISION} or {@linkplain #NO_COLLISION}.
+	 *         if a daughter class of {@linkplain CelestialBody} has not passed, the
+	 *         method returns {@linkplain #NOT_CELESTIALBODY_DAUGHTER}
+	 * @author Simone
+	 */
 	public static String collisionMenu(CelestialBody c1, CelestialBody c2) {
 		switch (c1.whichCelestialBodyIs()) {
 		case STAR:
@@ -144,12 +158,19 @@ public class Collision {
 	 * </dl>
 	 * <dl>
 	 * - the <b>distance </b>from the {@linkplain Star} of the
-	 * <code><b>first</b></code> {@linkplain Moon}'s {@linkplain Planet} plus its {@code radius} is
-	 * greater than the <b>distance </b> of the <b>{@code second}</b> {@linkplain Moon}'s {@linkplain Planet} minus its {@code radius}
+	 * <code><b>first</b></code> {@linkplain Moon}'s {@linkplain Planet} plus its
+	 * {@code radius} is greater than the <b>distance </b> of the
+	 * <b>{@code second}</b> {@linkplain Moon}'s {@linkplain Planet} minus its
+	 * {@code radius}
 	 * </dl>
-	 * <br> Example {@code ((m1.getRadius() + m1.getPlanet().getRadius() }<b>> </b>{@code m2.getPlanet().getRadius() - m2.getRadius()) }
-	 * @param m1, the first {@linkplain Moon}
-	 * @param m2, the second {@linkplain Moon}
+	 * <br>
+	 * Example {@code ((m1.getRadius() + m1.getPlanet().getRadius() }<b>>
+	 * </b>{@code m2.getPlanet().getRadius() - m2.getRadius()) }
+	 * 
+	 * @param m1,
+	 *            the first {@linkplain Moon}
+	 * @param m2,
+	 *            the second {@linkplain Moon}
 	 * @author Simone
 	 */
 	private static boolean MoonMoonCollision(Moon m1, Moon m2) {
