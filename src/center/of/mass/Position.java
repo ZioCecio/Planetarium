@@ -1,10 +1,11 @@
 package center.of.mass;
 
 public class Position {
-
-	/*
-	 * Nota bene: tutte le posizioni sono ricavate prendendo come punto di
-	 * riferimento il sole in posizione (0,0)
+	/**
+	 * Please note positions of planets as well as moons are referred to the star's
+	 * position
+	 * 
+	 * @author Alessandra
 	 * 
 	 */
 
@@ -76,9 +77,11 @@ public class Position {
 
 	/**
 	 * Check if two {@code Position} are the same
+	 * 
 	 * @author Gabriele
 	 * @param position
-	 * @return {@code true} if {@code this} position is equals as that passed as parameter
+	 * @return {@code true} if {@code this} position is equals as that passed as
+	 *         parameter
 	 */
 	public boolean equals(Position position) {
 		return this.x == position.x && this.y == position.y;

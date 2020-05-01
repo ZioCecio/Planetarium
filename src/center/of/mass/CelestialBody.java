@@ -85,7 +85,7 @@ public class CelestialBody {
 		return (this.id.compareTo(celestialBody.getId())==0 &&this.name.compareTo(celestialBody.getId())==0 && this.mass == celestialBody.getMass());
 	}
 	/**@return a {@linkplain String} indicating what type of {@linkplain CelestialBody} it is.<blockquote>
-	 * if it don't found any corrisponce ->{@code null}</blockquote>
+	 * if it don't found any correspondence ->{@code null}</blockquote>
 	 * @author Simone*/
 	public String whichCelestialBodyIs() {
 		String id = null;

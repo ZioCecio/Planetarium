@@ -30,7 +30,9 @@ public class StarSystem {
 
 	/**
 	 * calculate the center of mass
-	 * 
+	 * please refer to the following bidimensional formula:
+	 * See: <a href=" http://hyperphysics.phy-astr.gsu.edu/hbase/cm.html"> 
+	 * http://hyperphysics.phy-astr.gsu.edu/hbase/cm.html</a>
 	 * @Author Alessandra
 	 * @return {@code Position} of the center of mass
 	 */
@@ -431,7 +433,7 @@ public class StarSystem {
 	 * @author Gabriele
 	 * @throws InvalidPositionException if the position is already occupied
 	 * @throws InvalidNameException     if the name is already in use
-	 * @throws InvalidMassException     if the mass is too high
+	 * @throws InvalidMassException     if the value of the mass is too high
 	 */
 	private void checkValidity(CelestialBody celestialBodyToCheck)
 			throws InvalidPositionException, InvalidNameException, InvalidMassException {
@@ -452,9 +454,9 @@ public class StarSystem {
 			if (name.equals(celestialBody.getName())) {
 				throw new InvalidNameException("The specified name is already in use");
 			}
-			if (this.isValidMass(celestialBody)) {
-				throw new InvalidMassException("The mass is too high");
-			}
+		}
+		if(this.isValidMass(celestialBodyToCheck)) {
+			throw new InvalidMassException("The value of the mass is too high");
 		}
 	}
 
@@ -471,13 +473,11 @@ public class StarSystem {
 			if (celestialBody.getMass() > this.star.getMass()) {
 				return true;
 			}
-			return false;
 		}
 		if (celestialBody instanceof Moon) {
 			if (celestialBody.getMass() > ((Moon) celestialBody).getPlanet().getMass()) {
 				return true;
 			}
-			return false;
 		}
 		return false;
 	}
