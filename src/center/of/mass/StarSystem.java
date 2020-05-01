@@ -77,8 +77,10 @@ public class StarSystem {
 			throw exception;
 		} catch (InvalidNameException exception) {
 			throw exception;
-		} catch (InvalidMassException exception) {
-			throw exception;
+		} 
+
+		if(planet.getMass() > this.star.getMass()) {
+			throw new InvalidMassException("The mass is too high");
 		}
 
 		this.star.addPlanet(planet);
@@ -110,14 +112,16 @@ public class StarSystem {
 			throw exception;
 		} catch (InvalidNameException exception) {
 			throw exception;
-		} catch (InvalidMassException exception) {
-			throw exception;
 		}
 
 		Planet planet = this.star.getPlanetById(idOfPlanet);
 
 		if (planet == null) {
 			throw new CelestialBodyNotFoundException("The planet with the spiecified id doesn't exist");
+		}
+
+		if(moon.getMass() > planet.getMass()) {
+			throw new InvalidMassException("The mass is too high");
 		}
 
 		planet.addMoon(moon);
@@ -156,6 +160,10 @@ public class StarSystem {
 
 		if (planet == null) {
 			throw new CelestialBodyNotFoundException("The planet with the spiecified name doesn't exist");
+		}
+
+		if(moon.getMass() > planet.getMass()) {
+			throw new InvalidMassException("The mass is too high");
 		}
 
 		planet.addMoon(moon);
@@ -412,7 +420,7 @@ public class StarSystem {
 	 * @throws InvalidMassException     if the value of the mass is too high
 	 */
 	private void checkValidity(CelestialBody celestialBodyToCheck)
-			throws InvalidPositionException, InvalidNameException, InvalidMassException {
+			throws InvalidPositionException, InvalidNameException {
 		ArrayList<CelestialBody> celestialBodies = new ArrayList<CelestialBody>();
 
 		Position position = celestialBodyToCheck.getPosition();
@@ -431,30 +439,5 @@ public class StarSystem {
 				throw new InvalidNameException("The specified name is already in use");
 			}
 		}
-		if(this.isValidMass(celestialBodyToCheck)) {
-			throw new InvalidMassException("The value of the mass is too high");
-		}
-	}
-
-	/**
-	 * the mass of a moon must be lower than the one of its own planet the mass of a
-	 * planet must be lower than the one of its own star
-	 * 
-	 * @author Alessandra
-	 * @param celestialBody
-	 * @return
-	 */
-	public boolean isValidMass(CelestialBody celestialBody) {
-		if (celestialBody instanceof Planet) {
-			if (celestialBody.getMass() > this.star.getMass()) {
-				return true;
-			}
-		}
-		if (celestialBody instanceof Moon) {
-			if (celestialBody.getMass() > ((Moon) celestialBody).getPlanet().getMass()) {
-				return true;
-			}
-		}
-		return false;
 	}
 }
